@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{amsthm}
 
 \title{Chapter 2 - Questions and Solutions}
 \newcommand{\chapternumber}{2}
@@ -97,6 +98,126 @@
 			and therefore the variance is
 			\[\frac{a(a+1)}{(a+b)(a+b+1)}-\frac{a^2}{(a+b)^2} = \frac{ab}{(a+b)^2(a+b+1)}\]
 		\end{answered}
+	
+		\item Show that the normalising constant in the beta distribution with parameters a,b is given by 
+		\[\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\]
+		\begin{answered}
+			The beta distribution $Beta(a,b)$ is defined on $[0,1]$ by the probability density function
+			\[\frac{x^{a-1}(1-x)^{b-1}}{B(a,b)}\]
+			We are required to prove that 
+			\[B(a,b)=\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\]
+			This is equivalent to showing
+			\[\int_\mathbb{R}x^{a-1}(1-x)^{b-1}dx=\frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}\]
+			since any probability distribution must integrate to 1 over its domain.
+			The gamma function is defined by
+			\[\Gamma(a)=\int_\mathbb{R}x^{a-1}e^{-x}\]
+			so we can multiply through by $\Gamma(a+b)$ in the above expression and expand to obtain our proposition as an equality between two double integrals:
+			\[\int_\mathbb{R}\int_\mathbb{R}x^{a-1}(1-x)^{b-1}y^{a+b-1}e^{-y}dxdy=\int_\mathbb{R}\int_\mathbb{R}u^{a-1}e^{-u}v^{b-1}e^{-v}dudv\]
+			On the right-hand side we can substitute $u=xy$ and $v=(1-x)y$, which gives us the following relation between area elements:
+			\[dudv=\begin{vmatrix}
+			\frac{\partial u}{\partial x} & \frac{\partial u}{\partial y}\\
+			\frac{\partial v}{\partial x} & \frac{\partial v}{\partial y}
+			\end{vmatrix}dxdy = 
+			\begin{vmatrix}
+			y & x\\
+			-y & (1-x)
+			\end{vmatrix}dxdy
+			=y\cdot dxdy
+			\]
+			Using this and fully substituting leaves the right-hand side as
+			\[\int_\mathbb{R}\int_\mathbb{R}(xy)^{a-1}((1-x)y)^{b-1}y\cdot dxdy\]
+			which is just the left-hand side of the equation. $\qedsymbol$
+		\end{answered}
+	
+	\item Show that the mean and variance of the pdf of the gamma distribution with parameters a,b 
+	\[p(x)=\begin{cases}
+	\frac{b^a}{\Gamma(a)}x^{a-1}e^{-bx} & x>0\\
+	0 & else
+	\end{cases}\]
+	are given by
+	\[\frac{a}{b}\]
+	and
+	\[\frac{a}{b^2}\]
+	respectively.
+	\begin{answered}
+		The expectation is given by 
+		\[\int_0^{\infty} \frac{b^a}{\Gamma(a)}x^ae^{-bx}dx\]
+		Setting $u = bx$ and substituting into the above integral yields 
+		\[\int_0^{\infty} \frac{u^{a}}{b\Gamma(a)}e^{-u}du=\frac{\Gamma(a+1)}{b\Gamma(a)}=\frac{a}{b}\]
+		where the last equality comes from the relation $\Gamma(a+1)=a\Gamma(a)$\\
+		\\
+		The variance is given by
+		\[\int_0^{\infty} \frac{b^a}{\Gamma(a)}x^{a+1}e^{-bx}dx-\frac{a^2}{b^2}\]
+		We make the same integral substitution as above which causes the expression to reduce to
+		\[\int_0^{\infty} \frac{u^{a+1}}{b^2\Gamma(a)}e^{-u}du-\frac{a^2}{b^2}=\frac{\Gamma(a+2)}{\Gamma(a)b^2}-\frac{a^2}{b^2}=\frac{a}{b^2}\]
+		since $\Gamma(a+2)=a(a+1)\Gamma(a)$
+	\end{answered}
+
+	\item Show that the mean and covariance of a Dirichlet pdf with parameters $a_k$, $k=1,2,...,K$ are given by
+	\[\frac{a}{\bar{a}}\]
+	and
+	\[\frac{\bar{a}\delta_3a-aa^T}{\bar{a}^2(1-\bar{a})}\]
+	respectively\\
+	\\
+	($\bar{a}$ is the sum of all elements of $a$ and $\delta_3$ is the 3D Kronecker delta)
+	\begin{answered}
+		The pdf of this Dirichlet distribution over $\mathbb{R}^k$ is defined by
+		\[\begin{cases}
+		\frac{\Gamma(\bar{a})}{\Gamma(a_1)...\Gamma(a_k)}\prod_{k=1}^Kx_k^{a_k-1} & (\forall i,0\leq x_i\leq 1)\land(\sum_{i=1}^{K}x_i=1)\\
+		0 & else
+		\end{cases}\]
+		We won't write out complete integrals here because they are horrible - we will instead use some neat trickery to rewrite the integrands of expectations we want in terms of other Dirichlet pdfs, which conveniently integrate to 1 across our domain. We will therefore write our compound integral using a single integral sign over our domain $D$, and just write $dx$ for our hypervolume element.\\
+		\\
+		The $i$th component of the mean is given by
+		\[\int_Dx_i\frac{\Gamma(\bar{a})}{\Gamma(a_1)...\Gamma(a_k)}\prod_{k=1}^Kx_k^{a_k-1}dx\]
+		If we define a vector $b$ s.t. $b_j=a_j$ for $j\neq i$, and $b_i=a_i+1$, then we note that the above integral is just
+		\[\int_D\frac{\Gamma(\bar{a})}{\Gamma(a_1)...\Gamma(a_k)}\prod_{k=1}^Kx_k^{b_k-1}dx\]
+		$\bar{b}=\bar{a}+1$, so we can use the our nifty relation on gammas \[\Gamma(x+1)=x\Gamma(x)\]
+		to simplify the above to
+		\[\frac{a_i}{\bar{a}}\int_D\frac{\Gamma(\bar{b})}{\Gamma(b_1)...\Gamma(b_k)}\prod_{k=1}^Kx_k^{b_k-1}dx\]
+		The integrand is just the pdf of the Dirichlet distribution with parameter vector $b$, and so the integral evaluates to 1. This gives our mean vector as just
+		\[\frac{a}{\bar{a}}\]
+		The $i,j$th element of the covariance is given by
+			\[\int_Dx_ix_j\frac{\Gamma(\bar{a})}{\Gamma(a_1)...\Gamma(a_k)}\prod_{k=1}^Kx_k^{a_k-1}dx-\frac{a_ia_j}{\bar{a}^2}\]
+		If $i\neq j$, we can define a vector $c$ s.t. $c_k=c_k$ for $k\neq i,j$, and $c_k=a_k+1$ for $k=i,j$. Then we again use our gamma relation to rearrange the above integral to \[\frac{a_ia_j}{\bar{a}(\bar{a}+1)}\int_D\frac{\Gamma(\bar{c})}{\Gamma(c_1)...\Gamma(c_k)}\prod_{k=1}^Kx_k^{c_k-1}dx=\frac{a_ia_j}{\bar{a}(\bar{a}+1)}\]
+		since the integrand above is just the pdf of the Dirichlet distribution with parameter vector $c$. This gives the value of the $i,j$th element as
+		\[\frac{a_ia_j}{\bar{a}}\left(\frac{1}{\bar{a}+1}-\frac{1}{\bar{a}}\right)=-\frac{a_ia_j}{\bar{a}^2(\bar{a}+1)}\]
+		If instead $i=j$, then define $d$ s.t. $d_k=a_k$ for $k\neq i$ and $d_i=a_i+2$. So our expression for the $i,i$th element becomes
+		\[\frac{a_i(a_i+1)}{\bar{a}(\bar{a}+1)}\int_D\frac{\Gamma(\bar{d})}{\Gamma(d_1)...\Gamma(d_k)}\prod_{k=1}^Kx_k^{d_k-1}dx-\frac{a_i^2}{\bar{a}^2}\]
+		As with the previous examples, the integral just evaluates to 1, so this simplifies to
+		\[\frac{a_i}{\bar{a}(\bar{a}+1)}+\frac{a_i^2}{\bar{a}}\left(\frac{1}{\bar{a}+1}-\frac{1}{\bar{a}}\right)=\frac{\bar{a}a_i-a_i^2}{\bar{a}^2(\bar{a}+1)}\]
+		When we consider this across all $i,j$, we get the proposed expression for covariance.
+	\end{answered}
+		
+		
+	\item Show that the sample mean of $N$ i.i.d. samples, is an unbiased estimator with variance that tends to zero asymptotically as $N\rightarrow\infty$
+	\begin{answered}
+		Suppose we are sampling from an underlying distribution $A$, and our $i$th samples is denoted by $A_i$ - all independent and distributed as $A$. Our sample mean is defined by
+		\[\bar{A}=\frac{1}{n}\sum_{i=1}^{K}A_i\]
+		Expectation distributes over all sums, therefore
+		\[E(\bar{A})=E\left(\frac{1}{n}\sum_{i=1}^{K}A_i\right)=\frac{1}{n}\sum_{i=1}^{K}E(A_i)=\frac{n*E(A)}{n}=E(A)\]
+		since all the $A_i$ are distributed as $A$ is. Therefore the sample mean is unbiased.
+		This tells us that the variance of the sample mean is given by 
+		\[E((\bar{A}-E(A)(\bar{A}-E(A)))\]
+		Using again the distribution of expectation over addition and scalar multiples, we can rewrite this as
+		\[\sum_{i=1}^N\sum_{j=1}^NE\left(\frac{A_i-E(A)}{n}\frac{A_j-E(A)}{n}\right)\]
+		By independence of the $A_i$ and the fact that all the $A_i$ have mean $E(A)$, the cross-terms cancel and we are left with
+		\[\sum_{i=1}^j\frac{Var(A_i)}{n^2}=\frac{n*Var(A_i)}{n^2} = \frac{Var(A)}{n}\]
+		This converges to 0 as $N\rightarrow\infty$
+	\end{answered}
+	
+	\item Show that for WSS processes
+	\[r(0)\geq |r(k)|,\forall k\in \mathbb{Z}\]
+	and that for jointly-WSS processes
+	\[r_u(0)r_v(0)\geq|r_uv(0)|\]
+	\begin{answered}
+		A WSS (Wide-Sense Stationary) process is defined as one for which $\mu_n=\mu$ $\forall n$ for some $\mu$ and for which $r(n,n-k)=r(k)$ $\forall n,k$ ($r(a,b)$ is the autocorrelation at times $a,b$).\\
+		\\
+		We define a process by the time-indexed sequence of random variables $u_t$, where $t$ is time. Suppose that it is WSS. Consider the random variable $(u_k-u_0)^2$ for arbitrary $k$. It is non-negative, so must have non-negative mean. Therefore
+		\[0\leq E((u_k-u_0)^2)=E(u_ku_k)-2E(u_ku_0)+E(u_0u_0)=2r(0)-2r(k)\]
+		This immediately gives $r(0)\geq r(k)$.\\
+	\end{answered}
+
 
 	\end{QandA}
 
