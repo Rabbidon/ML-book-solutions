@@ -179,7 +179,7 @@
 		\[\frac{a}{\bar{a}}\]
 		The $i,j$th element of the covariance is given by
 			\[\int_Dx_ix_j\frac{\Gamma(\bar{a})}{\Gamma(a_1)...\Gamma(a_k)}\prod_{k=1}^Kx_k^{a_k-1}dx-\frac{a_ia_j}{\bar{a}^2}\]
-		If $i\neq j$, we can define a vector $c$ s.t. $c_k=c_k$ for $k\neq i,j$, and $c_k=a_k+1$ for $k=i,j$. Then we again use our gamma relation to rearrange the above integral to \[\frac{a_ia_j}{\bar{a}(\bar{a}+1)}\int_D\frac{\Gamma(\bar{c})}{\Gamma(c_1)...\Gamma(c_k)}\prod_{k=1}^Kx_k^{c_k-1}dx=\frac{a_ia_j}{\bar{a}(\bar{a}+1)}\]
+		If $i\neq j$, we can define a vector $c$ s.t. $c_k=a_k$ for $k\neq i,j$, and $c_k=a_k+1$ for $k=i,j$. Then we again use our gamma relation to rearrange the above integral to \[\frac{a_ia_j}{\bar{a}(\bar{a}+1)}\int_D\frac{\Gamma(\bar{c})}{\Gamma(c_1)...\Gamma(c_k)}\prod_{k=1}^Kx_k^{c_k-1}dx=\frac{a_ia_j}{\bar{a}(\bar{a}+1)}\]
 		since the integrand above is just the pdf of the Dirichlet distribution with parameter vector $c$. This gives the value of the $i,j$th element as
 		\[\frac{a_ia_j}{\bar{a}}\left(\frac{1}{\bar{a}+1}-\frac{1}{\bar{a}}\right)=-\frac{a_ia_j}{\bar{a}^2(\bar{a}+1)}\]
 		If instead $i=j$, then define $d$ s.t. $d_k=a_k$ for $k\neq i$ and $d_i=a_i+2$. So our expression for the $i,i$th element becomes
@@ -209,16 +209,97 @@
 	\item Show that for WSS processes
 	\[r(0)\geq |r(k)|,\forall k\in \mathbb{Z}\]
 	and that for jointly-WSS processes
-	\[r_u(0)r_v(0)\geq|r_uv(0)|\]
+	\[r_u(0)r_v(0)\geq|r_{uv}(k)|,\forall k\in \mathbb{Z}[sic]\]
 	\begin{answered}
 		A WSS (Wide-Sense Stationary) process is defined as one for which $\mu_n=\mu$ $\forall n$ for some $\mu$ and for which $r(n,n-k)=r(k)$ $\forall n,k$ ($r(a,b)$ is the autocorrelation at times $a,b$).\\
 		\\
 		We define a process by the time-indexed sequence of random variables $u_t$, where $t$ is time. Suppose that it is WSS. Consider the random variable $(u_k-u_0)^2$ for arbitrary $k$. It is non-negative, so must have non-negative mean. Therefore
 		\[0\leq E((u_k-u_0)^2)=E(u_ku_k)-2E(u_ku_0)+E(u_0u_0)=2r(0)-2r(k)\]
 		This immediately gives $r(0)\geq r(k)$.\\
+		\\
+		The second part of the assertion is not true (consider two processes with a constant value of $\frac{1}{2}$). The mathematical expression should probably read
+		\[r_u(0)r_v(0)\geq|r_{uv}(k)|^2\]
+		This follows from a special case of H{\"o}lder's inequality, which states that the product of the expectation of two non-negative random variables exceeds the square of the expectation of the product of those variables. We can use this elementwise on the absolulute values elements of $u_0$ and $v_k$ and sum the resulting inequalities to obtain
+		\[E(u_0\cdot u_0)E(v_k\cdot v_k)\geq (E(abs(u_0)\cdot abs(v_k))^2\] 
+		where here $abs(a)$ is the vector containing the elementwise absolute values of $a$. $|abs(u_0)\cdot abs(v_k)|>|u_0\cdot v_k|$ always, so 
+		\[E(abs(u_0)\cdot abs(v_k))=|E(abs(u_0)\cdot abs(v_k))|\geq |E(u_0\cdot v_k)|\]
+		and the desired result follows immediately from this.
+	\end{answered}
+
+	\item Show that the autocorrelation of the output of a linear system, with impulse response $w_n,n\in\mathbb{Z}_n$ is related to the autocorrelation of the input WSS process, via
+	\[r_d(k)=r_u(k)* w_k* w^*_{-k}[sic]\]
+	\begin{answered}
+		This is wrong - you can't convolve over scalars. What is actually required to be shown is
+		\[r_d(k)=(r_u* w* \bar{w}^*)_k\]
+		where $\bar{w}$ is the sequence obtained by flipping w about the origin and $r_u$ is a sequence defined by $(r_u)_i=r_u(i)$.\\
+		\\
+		By definition
+		\[d_k=\sum_{i=-\infty}^\infty u_i^*w_{k-i}\]
+		Therefore we may write
+		\[r_d(k)=E(d_0d_k)=E\left(\sum_{i=-\infty}^\infty\sum_{j=-\infty}^\infty u_i^*w_{-i}u_j^*w_{k-j}\right)\]
+		Since $j$ is in the inner loop, we can make the change of variables $a=j-i$ and obtain
+		\[E\left(\sum_{i=-\infty}^\infty\sum_{a=-\infty}^\infty u_i^*w_{-i}u_{a+i}^*w_{k-a-i}\right)\]
+		We take the expectation inside to obtain
+		\[\sum_{i=-\infty}^\infty\sum_{a=-\infty}^\infty E(u_iu_{a+i})^*w_{-i}w_{k-a-i}=\sum_{i=-\infty}^\infty\sum_{a=-\infty}^\infty r_u(a)^*w_{-i}w_{k-a-i}\]
+		We can now switch the sums, use the fact that $r_u(a)$ is independent of $i$, and subtract k from the indices of the inner sum by k (which doesn't affect the summation indices) to obtain
+		\[\sum_{a=-\infty}^\infty r_u(a)^*\sum_{i=-\infty}^\infty w_{-i}w_{k-a-i}\]
+		We now denote $\bar{w}$ as the sequence $w$ reversed about the origin, giving our expression as
+		\[\sum_{a=-\infty}^\infty r_u(a)^*\sum_{i=-\infty}^\infty \bar{w}_{i}w_{k-a-i}\]
+		This is just 
+		\[\sum_{a=-\infty}^\infty r_u(a)^*(\bar{w}^**w)_{k-a}\]
+		which is just 
+		\[(r_u* w* \bar{w}^*)_k\]
+		as required.
+	\end{answered}
+
+	\item Show that 
+	\[ln(x)\leq x-1\]
+	\begin{answered}
+		Consider the function \[f(x)=x-1-ln(x)\]The statement we are required to prove is equivalent to $f$ being everywhere non-negative. $f$ is differentiable everywhere it is defined (on $(0,\infty)$), and so we have
+		\[f'(x)=1-\frac{1}{x}\]
+		We note that $f'$ is negative for $x<1$ and positive for $x>1$. Therefore the minimum of $f$ occurs at $x=1$. $f(1)=0$, therefore $f\geq0$ everywhere. $\qed$		
+	\end{answered}
+
+	\item Show that 
+	\[I(X,Y)\geq 0\]
+	\begin{answered}
+		The average mutual information $I(X,Y)$ is defined by
+		\[I(X,Y)=\sum_{x\in X}\sum_{y\in Y}P(x,y)\log\left(\frac{P(x,y)}{P(x)P(y)}\right)\].
+		We can restrict this sum to combinations of $x,y$ s.t. $P(x,y)>0$. This condition implies $P(x)P(y)>0$
+		Now we can use the solution to problem 2.13, since 
+		\[\sum_{x,y\ s.t.\ P(x,y)>0}P(x,y)=1\]
+		and
+		\[\sum_{x,y\ s.t.\ P(x,y)>0}P(x)P(y)\leq1\]
+		and $P(x,y)\geq 0,P(x)P(y)\geq0$ $\forall x,y$
+		we have
+		\[\sum_{x,y\ s.t.\ P(x,y)>0}P(x,y)log(P(x,y))\geq \sum_{x,y\ s.t.\ P(x,y)>0}P(x,y)log(P(x)P(y))\]
+		which immediately rearranges to the required result.
+	\end{answered}
+
+	\item Show that if $a_i,b_i,i=1,2,...,M$ are positive numbers with
+	\[\sum_{i=1}^Ma_i=1,\sum_{i=1}^Mb_i\leq1\]
+	then
+	\[-\sum_{i=1}^Ma_i\log(a_i)\leq-\sum_{i=1}^Ma_i\log(b_i)\]
+	\begin{answered}
+		This follows straightforwardly from the concavity of log. Since the $a_i$ are positive and sum to 1 we have
+	\[\sum_{i=1}^Ma_i\log\left(\frac{b_i}{a_i}\right)\leq \log\left(\sum_{i=1}^Ma_i\frac{b_i}{a_i}\right)=\log\left(\sum_{i=1}^Mb_i\right)\leq \log(1)=0\]
+	The initial proposition follows from a simple rearrangement.
 	\end{answered}
 
 
+	\item Show that the maximum value of the entropy of a random variable occurs if all possible outcomes are equiprobable
+	\begin{answered}
+		Suppose that X is the random variable on $M$ outcomes with the highest entropy (exists via compactness argument). Suppose $X$ takes outcome $x_i$ with probability $p_i$ for $i=1,2,...,M$. Now suppose that not all the $p_i$ are equal. By reordering, $p_1< p_2$. Now we define a random variable $Y$ taking the same values as $X$ with the same probabilities, apart from $x_1,x_2$, which $Y$ takes with probabilities $\frac{p_1+p_2}{2}$ each. We note that the function $f(x)=x\log(x)$ is strictly convex in the range $[0,1]$ (second derivative is $1/x$) so we get
+		\[\frac{p_1+p_2}{2}\log\left(\frac{p_1+p_2}{2}\right)<\frac{1}{2}(p_1\log(p_1)+p_2\log(p_2))\]
+		which when we consider the expressions for entropy of both $X$ and $Y$, tells us that $X$ has a lower entropy than $Y$. This is a contradiction, so all the $p_i$ must be equal.$\qed$
+		
+	\end{answered}
+
+	\item Show that of all the pdfs that describe a random variable in an interval $[a,b]$, the uniform one maximises the entropy.
+	\begin{answered}
+		This is identical to the previous proof except that instead of supposing that our entropy-maximising case has outcomes that do not have equal probabilities, we suppose that our pdf has a region of non-zero measure with an average p.d.f not equal to $\frac{1}{b-a}$. The rest of the proof follows in the same way.
+	\end{answered}
+	
 	\end{QandA}
 
 \end{document}
