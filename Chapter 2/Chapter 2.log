@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.16)  7 DEC 2019 18:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.16)  9 DEC 2019 14:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -509,7 +509,33 @@ n/10 (\OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )\OM
 L/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 y\OT1/cmr/m/n/10 ))
  []
 
-[11] [12] (./Chapter 2.aux) ) 
+[11]
+Overfull \hbox (37.80783pt too wide) detected at line 303
+[][] \OML/cmm/m/it/10 ^^^ []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^^\OT1/cmr/m/n/1
+0 ) \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10   []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10
+  \OT1/cmr/m/n/10 )\OML/cmm/m/it/10 dx \OMS/cmsy/m/n/10 ^^U [][] [] [] [] ^^@ [
+] [] [] \OML/cmm/m/it/10 dx
+ []
+
+
+Overfull \hbox (38.54599pt too wide) detected at line 305
+[][] \OML/cmm/m/it/10   []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10  \OT1/cmr/m/n/10 ) 
+\OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 ^^^ []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^
+^^\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 dx \OMS/cmsy/m/n/10 ^^T [][] [] [] [] ^^@ [
+] [] [] \OML/cmm/m/it/10 dx
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 305--309
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 309--314
+
+ []
+
+[12] [13] (./Chapter 2.aux) ) 
 Here is how much of TeX's memory you used:
  2001 strings out of 492982
  23160 string characters out of 6134895
@@ -517,7 +543,7 @@ Here is how much of TeX's memory you used:
  5570 multiletter control sequences out of 15000+600000
  13040 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 27i,9n,26p,720b,300s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 27i,9n,26p,919b,300s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmbsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
 nts/cmextra/cmbsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
@@ -538,10 +564,10 @@ m/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
 7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.p
 fb>
-Output written on "Chapter 2.pdf" (12 pages, 226407 bytes).
+Output written on "Chapter 2.pdf" (13 pages, 231026 bytes).
 PDF statistics:
- 123 PDF objects out of 1000 (max. 8388607)
- 88 compressed objects within 1 object stream
+ 127 PDF objects out of 1000 (max. 8388607)
+ 91 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
