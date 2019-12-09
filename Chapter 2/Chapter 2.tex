@@ -297,19 +297,7 @@
 
 	\item Show that of all the pdfs that describe a random variable in an interval $[a,b]$, the uniform one maximises the entropy.
 	\begin{answered}
-		We take the same approach as in the previous question - however, we note that the uniform p.d.f. is not unique in maximising entropy - any p.d.f that differs from it on a set of zero measure will also work. We have to make the following adaptation to the hypothesis we are going to contradict - suppose that $X$ is the random variable that maximises entropy in this context, and has a p.d.f $\phi$ that differs from $\frac{1}{b-a}$ on a set of positive measure. Then $\exists\epsilon,\delta>0\ s.t\ \phi(x)>\frac{1}{b-a}+\epsilon$ on some set of measure $\delta$ $A$ and also $\phi(x)<\frac{1}{b-a}-\epsilon$ of a different set of measure $\delta$ $B$. Now we consider the p.d.f. $\psi$ which is equal to $X$ outside of $A$ and $B$, but is equal to $\phi-\delta$ on $A$ and $\phi+\delta$ on $B$. Now we can utilise the strict convexity of $x\log(x)$ on $(0,\infty)$ - if $p>q>0$ then
-		\[p\log(p)-(p-\delta)\log(p-\delta) > q\log(q)-(q-\delta)\log(q-\delta)\ \forall0<\delta<q\]
-		This yields
-		\[\int_A \phi\log(\phi)-\psi\log(\psi)dx\geq\int_A \left(\frac{1}{b-a}+\delta\right)\log\left(\frac{1}{b-a}+\delta\right)-\frac{1}{b-a}\log\left(\frac{1}{b-a}\right)dx\]
-		and
-		\[\int_B\psi\log(\psi)-\phi\log(\phi)dx\leq\int_B \left(\frac{1}{b-a}+\delta\right)\log\left(\frac{1}{b-a}+\delta\right)-\frac{1}{b-a}\log\left(\frac{1}{b-a}\right)dx\]
-		Note that both the integrals on the right-hand side are strictly positive quantities since $A$ and $B$ have positive measure. Therefore we can write their sum as a positive constant $C$.\\
-		\\
-		Outside of $A\cup B$, $\phi=\psi$, so we can now put everything together and write
-		\[\int_0^1-\psi\log(\psi)dx\geq\int_0^1-\phi\log(\phi)dx+C\]
-		Therefore any random variable with $\psi$ as its p.d.f. will have a greater entropy than $X$. This is a contradiction, so $X$ can only differ from the uniform distribution on a set of zero measure.\\
-		\\
-		This is not quite complete - we need to actually show that a distribution with maximum entropy exists - this proof is normally done using Lagrange multipliers for that very reason.
+		This is done rigorously using Lagrange multipliers.
 	\end{answered}
 	
 	\end{QandA}
