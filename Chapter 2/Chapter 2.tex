@@ -297,7 +297,17 @@
 
 	\item Show that of all the pdfs that describe a random variable in an interval $[a,b]$, the uniform one maximises the entropy.
 	\begin{answered}
-		This is done rigorously using Lagrange multipliers.
+		Pick any p.d.f $\phi$. Assume that the set $A=\{x|\phi(x)\neq\frac{1}{b-a}\}$ has positive measure. This is also equal to the union of nested sets
+		\[\bigcup_{i=0}^\infty\{x|(|\phi(x)-(b-a)^{-1}|>2^{-i})\}\]
+		Some of these sets must have positive measure, else $A$ would have 0 measure. Therefore $|\phi-(b-a)^{-1}|>\epsilon>0$ on some set of positive measure.
+		Now we consider the sequence of p.d.fs $\phi_i$ generated as follows:
+		\[\phi_0=\phi\]
+		\[\phi_{i+1}=\frac{\phi_i+\frac{1}{b-a}}{2}\ \forall i\in \mathbb{N}\]
+		Since $x\log(x)$ is strictly convex, we have that the entropy of $\phi_i$ strictly greater than the average entropy of (strictly since $\phi_0$, and therefore all the $\phi_i$ differ by at least some positive amount from $\frac{1}{b-a}$ on a set of positive measure). Therefore the entropy of this sequence is strictly increasing. We observe that
+		\[\phi_i=\frac{1}{b-a}+2^{-i}\left(\phi-\frac{1}{b-a}\right)\]
+		and therefore the $\phi_i$ converge to $\frac{1}{b-a}$ w.r.t the $L_2$ norm. Entropy is a continuous function w.r.t the $L_2$ norm, and therefore $\frac{1}{b-a}$ has entropy equal to the limit of the sequence of entropies, which as we mentioned before is strictly increasing. Therefore 
+		\[entropy\left(\frac{1}{b-a}\right)>entropy(\phi)\].
+		Any p.d.f differing from $\frac{1}{b-a}$ on a null set trivially has the same entropy as $\frac{1}{b-a}$, and so we have shown that all p.d.fs have entropy equal to at most that of the uniform p.d.f. $\qed$
 	\end{answered}
 	
 	\end{QandA}
