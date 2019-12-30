@@ -5,8 +5,8 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 
-\title{Chapter 2 - Questions and Solutions}
 \newcommand{\chapternumber}{2}
+\title{Chapter \chapternumber\ - Questions and Solutions}
 \author{Edwin Fennell}
 \date{}
 \newenvironment{QandA}{\begin{enumerate}[label=\chapternumber.\arabic*]\bfseries\boldmath}
@@ -195,13 +195,13 @@
 		Suppose we are sampling from an underlying distribution $A$, and our $i$th samples is denoted by $A_i$ - all independent and distributed as $A$. Our sample mean is defined by
 		\[\bar{A}=\frac{1}{n}\sum_{i=1}^{K}A_i\]
 		Expectation distributes over all sums, therefore
-		\[E(\bar{A})=E\left(\frac{1}{n}\sum_{i=1}^{K}A_i\right)=\frac{1}{n}\sum_{i=1}^{K}E(A_i)=\frac{n*E(A)}{n}=E(A)\]
+		\[E(\bar{A})=\mathbb{E}\left(\frac{1}{n}\sum_{i=1}^{K}A_i\right)=\frac{1}{n}\sum_{i=1}^{K}\mathbb{E}(A_i)=\frac{n*\mathbb{E}(A)}{n}=\mathbb{E}(A)\]
 		since all the $A_i$ are distributed as $A$ is. Therefore the sample mean is unbiased.
 		This tells us that the variance of the sample mean is given by 
-		\[E((\bar{A}-E(A)(\bar{A}-E(A)))\]
+		\[\mathbb{E}((\bar{A}-\mathbb{E}(A)(\bar{A}-\mathbb{E}(A)))\]
 		Using again the distribution of expectation over addition and scalar multiples, we can rewrite this as
-		\[\sum_{i=1}^N\sum_{j=1}^NE\left(\frac{A_i-E(A)}{n}\frac{A_j-E(A)}{n}\right)\]
-		By independence of the $A_i$ and the fact that all the $A_i$ have mean $E(A)$, the cross-terms cancel and we are left with
+		\[\sum_{i=1}^N\sum_{j=1}^N\mathbb{E}\left(\frac{A_i-\mathbb{E}(A)}{n}\frac{A_j-\mathbb{E}(A)}{n}\right)\]
+		By independence of the $A_i$ and the fact that all the $A_i$ have mean $\mathbb{E}(A)$, the cross-terms cancel and we are left with
 		\[\sum_{i=1}^j\frac{Var(A_i)}{n^2}=\frac{n*Var(A_i)}{n^2} = \frac{Var(A)}{n}\]
 		This converges to 0 as $N\rightarrow\infty$
 	\end{answered}
@@ -214,16 +214,22 @@
 		A WSS (Wide-Sense Stationary) process is defined as one for which $\mu_n=\mu$ $\forall n$ for some $\mu$ and for which $r(n,n-k)=r(k)$ $\forall n,k$ ($r(a,b)$ is the autocorrelation at times $a,b$).\\
 		\\
 		We define a process by the time-indexed sequence of random variables $u_t$, where $t$ is time. Suppose that it is WSS. Consider the random variable $(u_k-u_0)^2$ for arbitrary $k$. It is non-negative, so must have non-negative mean. Therefore
-		\[0\leq E((u_k-u_0)^2)=E(u_ku_k)-2E(u_ku_0)+E(u_0u_0)=2r(0)-2r(k)\]
+		\[0\leq \mathbb{E}((u_k-u_0)^2)=\mathbb{E}(u_ku_k)-2\mathbb{E}(u_ku_0)+\mathbb{E}(u_0u_0)=2r(0)-2r(k)\]
 		This immediately gives $r(0)\geq r(k)$.\\
 		\\
 		The second part of the assertion is not true (consider two processes with a constant value of $\frac{1}{2}$). The mathematical expression should probably read
 		\[r_u(0)r_v(0)\geq|r_{uv}(k)|^2\]
-		This follows from a special case of H{\"o}lder's inequality, which states that the product of the expectation of two non-negative random variables exceeds the square of the expectation of the product of those variables. We can use this elementwise on the absolulute values elements of $u_0$ and $v_k$ and sum the resulting inequalities to obtain
-		\[E(u_0\cdot u_0)E(v_k\cdot v_k)\geq (E(abs(u_0)\cdot abs(v_k))^2\] 
-		where here $abs(a)$ is the vector containing the elementwise absolute values of $a$. $|abs(u_0)\cdot abs(v_k)|>|u_0\cdot v_k|$ always, so 
-		\[E(abs(u_0)\cdot abs(v_k))=|E(abs(u_0)\cdot abs(v_k))|\geq |E(u_0\cdot v_k)|\]
-		and the desired result follows immediately from this.
+		Expanding out the left-hand side gives us (in suffix notation)
+		\[\mathbb{E}(u_iu_i)\mathbb{E}(v_jv_j)\]
+		while the right-hand side expands to
+		\[\mathbb{E}(u_iv_iu_jv_j)\]
+		where $i$ and $j$ on each side iterate over the same set of values. Now, if we fix $a,b$ we note that
+		\[\mathbb{E}(u_a^2)\mathbb{E}(v_b^2)+\mathbb{E}(u_b^2)\mathbb{E}(v_a^2)\geq(\mathbb{E}(u_av_b))^2+(\mathbb{E}(u_bv_a))^2\]
+		by Cauchy-Schwarz. The right-hand side is equal to 
+		\[\mathbb{E}((u_av_b-u_bv_a)^2)+2\mathbb{E}(u_av_au_bv_a)\geq2\mathbb{E}(u_av_au_bv_a)\]
+		Now if we take the resulting inequality and sum over all values of $a,b$, we obtain (in suffix notation)
+		\[2\mathbb{E}(u_iu_i)\mathbb{E}(v_jv_j)\geq2\mathbb{E}(u_iv_iu_jv_j)\]
+		Dividing through by 2 gives the result we want.
 	\end{answered}
 
 	\item Show that the autocorrelation of the output of a linear system, with impulse response $w_n,n\in\mathbb{Z}_n$ is related to the autocorrelation of the input WSS process, via
@@ -236,11 +242,11 @@
 		By definition
 		\[d_k=\sum_{i=-\infty}^\infty u_i^*w_{k-i}\]
 		Therefore we may write
-		\[r_d(k)=E(d_0d_k)=E\left(\sum_{i=-\infty}^\infty\sum_{j=-\infty}^\infty u_i^*w_{-i}u_j^*w_{k-j}\right)\]
+		\[r_d(k)=\mathbb{E}(d_0d_k)=\mathbb{E}\left(\sum_{i=-\infty}^\infty\sum_{j=-\infty}^\infty u_i^*w_{-i}u_j^*w_{k-j}\right)\]
 		Since $j$ is in the inner loop, we can make the change of variables $a=j-i$ and obtain
-		\[E\left(\sum_{i=-\infty}^\infty\sum_{a=-\infty}^\infty u_i^*w_{-i}u_{a+i}^*w_{k-a-i}\right)\]
+		\[\mathbb{E}\left(\sum_{i=-\infty}^\infty\sum_{a=-\infty}^\infty u_i^*w_{-i}u_{a+i}^*w_{k-a-i}\right)\]
 		We take the expectation inside to obtain
-		\[\sum_{i=-\infty}^\infty\sum_{a=-\infty}^\infty E(u_iu_{a+i})^*w_{-i}w_{k-a-i}=\sum_{i=-\infty}^\infty\sum_{a=-\infty}^\infty r_u(a)^*w_{-i}w_{k-a-i}\]
+		\[\sum_{i=-\infty}^\infty\sum_{a=-\infty}^\infty \mathbb{E}(u_iu_{a+i})^*w_{-i}w_{k-a-i}=\sum_{i=-\infty}^\infty\sum_{a=-\infty}^\infty r_u(a)^*w_{-i}w_{k-a-i}\]
 		We can now switch the sums, use the fact that $r_u(a)$ is independent of $i$, and subtract k from the indices of the inner sum by k (which doesn't affect the summation indices) to obtain
 		\[\sum_{a=-\infty}^\infty r_u(a)^*\sum_{i=-\infty}^\infty w_{-i}w_{k-a-i}\]
 		We now denote $\bar{w}$ as the sequence $w$ reversed about the origin, giving our expression as
@@ -298,8 +304,8 @@
 	\item Show that of all the p.d.f.s that describe a random variable in an interval $[a,b]$, the uniform one maximises the entropy.
 	\begin{answered}
 		We can use Jensen's inequality here - given a convex function $\phi$ and a real-valued random variable $X$, we have
-		\[\phi(E(X))\leq E(\phi(X))\] We note that $f(x)=x\log(x)$ is a convex function, and so given any p.d.f $\psi$, we have 
-		\[E(\psi)\log(E(\psi))\leq E(\psi\log(\psi))\] Multiplying through by -1, and noting that $E(\psi)=\frac{1}{b-a}$, we directly obtain
+		\[\phi(\mathbb{E}(X))\leq \mathbb{E}(\phi(X))\] We note that $f(x)=x\log(x)$ is a convex function, and so given any p.d.f $\psi$, we have 
+		\[\mathbb{E}(\psi)\log(\mathbb{E}(\psi))\leq \mathbb{E}(\psi\log(\psi))\] Multiplying through by -1, and noting that $\mathbb{E}(\psi)=\frac{1}{b-a}$, we directly obtain
 		\[entropy((b-a)^{-1})\geq entropy(\psi)\] $\psi$ was arbitrary, so we have that the uniform distribution on $[a,b]$ has the greatest entropy of all distributions on $[a,b]$.$\qed$ 
 	\end{answered}
 	

@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newcommand{\chapternumber}{3}
+\title{Chapter \chapternumber\ - Questions and Solutions}
+\author{Edwin Fennell}
+\date{}
+\newenvironment{QandA}{\begin{enumerate}[label=\chapternumber.\arabic*]\bfseries\boldmath}
+	{\end{enumerate}}
+\newenvironment{answered}{\par\bigskip\normalfont\unboldmath}{}
+\usepackage{lipsum}
+\pagestyle{empty}
+\begin{document}
+	
+	\maketitle
+	
+	\noindent%
+	\begin{QandA}
+		\item Let $\hat{\theta}_i,\ i=1,2,...,m$ be unbiased estimators of a parameter vector $\theta$, so that $\mathbb{E}[\hat{\theta}_i]=\theta,\ i=1,2,...,m$. Moreover, assume that the respective estimators are uncorrelated to each other and that all have the same variance $\sigma^2=\mathbb{E}[(\theta_i-\theta)^T(\theta_i-\theta)]$. Show that by averaging the estimates, e.g.
+		\[\hat{\theta}=\frac{1}{m}\sum_{i=1}^{m}\hat{\theta}_i\]
+		the new estimator has total variance $\sigma_c^2=\mathbb{E}[(\theta_i-\theta)^T(\theta_i-\theta)]=\frac{\sigma^2}{m}$.
+		\begin{answered}
+			Trivially, the mean of our unbiased estimators is also an unbiased estimator. The variance of our estimator $\hat{\theta}$ is therefore
+			\[\mathbb{E}(\hat{\theta}^T\hat{\theta})-\mathbb{E}(\theta)^T\mathbb{E}(\theta)\]
+			This expands to
+			\[\mathbb{E}\left(\sum_{i=1}^m\frac{1}{m}\hat{\theta_j}^T\left(\sum_{j=1}^m\frac{1}{m}\hat{\theta_j}\right)\right)-\mathbb{E}(\theta)^T\mathbb{E}(\theta)\]
+			The estimators are all pairwise uncorrelated, which means the the product of the expectations of any two distinct estimators is equal to the expectation of their product. Therefore we can rewrite the above as
+			\[\sum_{i=1}^m\left(\sum_{j=1}^m\frac{1}{m^2}\mathbb{E}(\hat{\theta}_i)^T\mathbb{E}(\hat{\theta}_j)+\frac{1}{m^2}(\mathbb{E}(\hat{\theta}_i^T\hat{\theta}_i)-\mathbb{E}(\hat{\theta}_i)^T\mathbb{E}(\hat{\theta}_i))\right) - \mathbb{E}(\theta)^T\mathbb{E}(\theta)\]
+			The first term with the double sum is actually just
+			\[\left( \sum_{i=1}^m\frac{1}{m}\mathbb{E}(\hat{\theta}_i)\right)^T\left( \sum_{i=1}^m\frac{1}{m}\mathbb{E}(\hat{\theta}_i)\right) = E(\theta)^TE(\theta)\]
+			This just cancels out with the last term, and we are left with the middle term, which is just $\frac{1}{m^2}$ times the sum of the variances of the initial $m$ estimators, as required.
+			
+		\end{answered}	
+	
+		\item Let $x$ be random variable uniformly distributed on $[0,\frac{1}{\theta}],\theta>0$. Assume that $g$ is a Lebesgue measurable function on $[0,\frac{1}{\theta}]$. Show that if $\hat{\theta}=g(x)$ is an unbiased estimator, then
+		\[\int_0^\frac{1}{\theta}g(x)dx=1\]
+		\begin{answered}
+			Assume that $\hat{\theta}$ is an unbiased estimator. Then
+			\[\forall\theta,\theta=\mathbb{E}(\hat{\theta})=\mathbb{E}(g(x))=\int_0^\frac{1}{\theta}g(x)\phi(x)dx\]
+			where $\phi$ is the p.d.f of $x$. Since $x$ is uniform, the p.d.f is just constantly $\theta$ This directly gives 
+			\[\int_0^\frac{1}{\theta}g(x)dx=1\] We note that there is no function $g(x)$ s.t. this holds. We note that our condition gives 
+			\[\int_a^bg(x)dx=0\ \forall 0<a<b\] Therefore
+			\[1=\int_0^\frac{1}{\theta}g(x)dx=\sum_{i=0}^\infty\int_\frac{2^{i+1}}{\theta}^\frac{2^i}{\theta}g(x)dx=0 \]
+			which is a contradiction.
+		\end{answered}
+	
+		\item A family $[p(D,\theta);\theta\in A]$ is called complete if, for any vector function $h(D)$ such that $\mathbb{E}_D[h;D]=0,\ \forall\theta$, then $h=0$. Show that if $[p(D;\theta):\theta\in A]$ in complete. and there exists an MVU estimator, then this estimator is unique.
+		\begin{answered}
+			Suppose we have two MVU estimators, $\theta_1$ and $\theta_2$. Then $\mathbb{E}\left(\frac{\theta_1+\theta_2}{2}\right)$ is also unbiased. This estimator has variance
+			\[\mathbb{E}\left(\left(\frac{\theta_1+\theta_2}{2}\right)^T\left(\frac{\theta_1+\theta_2}{2}\right)\right)=\frac{var(\theta_1)}{4}+\frac{var(\theta_2)}{4}+\mathbb{E}\left(\frac{\theta_1^T\theta_2}{2}\right)\]
+			$var(\theta_1)=var(\theta_2)$ is a lower bound for this variance, which gives us an inequality. A little rearranging gives
+			\[\mathbb{E}(2\theta_1^T\theta_2)\geq\mathbb{E}(\theta_1^T\theta_1)+\mathbb{E}(\theta_2^T\theta_2)\]
+			We also know that
+			\[\mathbb{E}(2\theta_1^T\theta_2)\leq\mathbb{E}(\theta_1^T\theta_1)+\mathbb{E}(\theta_2^T\theta_2)\]
+			by examining the expectation of the positive quantity $(\theta_1-\theta_2)^T(\theta_1-\theta_2)$. Therefore both of these inequalities hold with equality, and $\mathbb{E}((\theta_1-\theta_2)^T(\theta_1-\theta_2))=0\ \forall \theta$. By completeness, we have $(\theta_1-\theta_2)^T(\theta_1-\theta_2)=0$ identically, which immediately gives $\theta_1=\theta_2$, so the MVU estimator must be unique.
+		\end{answered}
+	
+		\item Let $\hat{\theta}_n$ be an unbiased estimator, so that $\mathbb{E}[\hat{\theta}_u]=\theta_0$. Define a biased one by $\hat{\theta}_b=(1+\alpha)\hat{\theta}_u$. Show that the range of $\alpha$ where the MSE of $\hat{\theta}_b$ is smaller than that of $\hat{\theta}_u$ is
+		\[-2<-\frac{2\text{MSE}(\hat{\theta_u})}{\text{MSE}(\hat{\theta_u})+\theta_0^2}<\alpha<0\]
+		\begin{answered}
+			We note that the MSE of $\hat{\theta}_u$ is 
+			\[\mathbb{E}((\hat{\theta}_u-\theta_0)^2)=\mathbb{E}(\hat{\theta}_u^2)-\theta_0^2\]
+			by unbiasedness. Similarly, the MSE of $\hat{\theta}_b$ is
+			\[\mathbb{E}((\hat{\theta}_b-\theta_0)^2)=(1+\alpha)^2\mathbb{E}(\hat{\theta}_u^2)-(1+2\alpha)\theta_0^2=(1+\alpha)^2\text{MSE}(\hat{\theta_u})+\alpha^2\theta_0^2\]
+			Therefore the condition we want occurs for exactly
+			\[(1+\alpha)^2\text{MSE}(\hat{\theta_u})-\alpha^2\theta_0^2<\text{MSE}(\hat{\theta_u})\]
+			This reduces to
+			\[\alpha((\text{MSE}(\hat{\theta_u})+\theta_0^2)\alpha)+2\text{MSE}(\hat{\theta_u}))<0\]
+			Which gives most of the above inequality. The left-most part is trivial from the fact that $\text{MSE}(\hat{\theta_u})$ and $\theta_0^2$ are both non-negative.
+		\end{answered}
+		\item Show that for the setting of Problem 3.4, the optimal value of $\alpha$ is equal to 
+		\[\alpha_*=-\frac{1}{1+\frac{\theta_0^2}{var(\hat{\theta}_u)}}\]
+		\begin{answered}
+			We note that our MSE for the biased estimator is a quadratic in $alpha$. Therefore we can just pick the unique value of $\alpha$ for which the derivative is 0, and we obtain the minimum possible MSE. The derivative is
+			\[2(\text{MSE}(\hat{\theta_u})+\hat{\theta}_0^2)\alpha+2\text{MSE}(\hat{\theta_u})\]
+			which trivially rearranges to the required result.
+		\end{answered}
+	\end{QandA}
+	
+\end{document}
