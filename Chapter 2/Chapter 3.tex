@@ -72,12 +72,48 @@
 			\[\alpha((\text{MSE}(\hat{\theta_u})+\theta_0^2)\alpha)+2\text{MSE}(\hat{\theta_u}))<0\]
 			Which gives most of the above inequality. The left-most part is trivial from the fact that $\text{MSE}(\hat{\theta_u})$ and $\theta_0^2$ are both non-negative.
 		\end{answered}
+	
 		\item Show that for the setting of Problem 3.4, the optimal value of $\alpha$ is equal to 
 		\[\alpha_*=-\frac{1}{1+\frac{\theta_0^2}{var(\hat{\theta}_u)}}\]
 		\begin{answered}
 			We note that our MSE for the biased estimator is a quadratic in $alpha$. Therefore we can just pick the unique value of $\alpha$ for which the derivative is 0, and we obtain the minimum possible MSE. The derivative is
 			\[2(\text{MSE}(\hat{\theta_u})+\hat{\theta}_0^2)\alpha+2\text{MSE}(\hat{\theta_u})\]
 			which trivially rearranges to the required result.
+		\end{answered}
+	
+		\item Show that the regularity condition for the Cramer-Rao lower bound holds true if the order of differentiation and integration can be interchanged.
+		\begin{answered}
+			Note that $\frac{\partial\:\log (p(x|\theta))}{\partial \theta} = \frac{1}{p(x|\theta)}\cdot\frac{\partial\:p(x|\theta)}{\partial \theta}$. This gives \[\mathbb{E}\left(\frac{\partial\:\log (p(x|\theta))}{\partial \theta}\right)=\int_{x\in X\cap\theta} p(x|\theta)\cdot\frac{1}{p(x|\theta)}\cdot\frac{\partial\:p(x|\theta)}{\partial \theta}\;d\mu=\int_{x\in X\cap\theta}\frac{\partial\:p(x|\theta)}{\partial \theta}\;d\mu\]
+			where $X\cap\theta$ is the probability space created by intersecting the probability space $X$ with the event $\theta$, and $\mu$ is its associated probability measure.
+			
+			Now, if we assume that differentiation and integration can be interchanged, then this is equal to
+			\[\frac{\partial}{\partial\theta}\int_{x\in X\cap\theta}p(x|\theta)\;d\mu\]
+			The expression being differentiated is just the integral of the probability of all events over the probability space, and so so is just equal to 1. Therefore the derivative is equal to 0, and thus the regularity condition holds, as required.
+		\end{answered}
+	
+		\item Derive the Cramer-Rao bound for the LS estimator, when the training data result from the linear model
+		\[y_n=\theta x_n+\eta_n,\quad n=1,2,...,\]
+		where $x_n$ and $\eta_n$ are i.i.d. samples of a zero mean random variable with variance $\sigma_x^2$, and a Gaussian random variable with zero mean and variance $\sigma_\eta^2$ respectively. Assume also that $x$ and $\eta$ are independent. Then show that the LS simulator achieves the CR bound only asymptotically.
+		
+		\begin{answered}
+			We here make the sensible assumption that both $x$ and $y$ are observable, and that $\eta$ is unobserved and the only source of uncertainty in our system. This gives us our likelihood function as
+			\[f(\textbf{a},\textbf{b};\theta)=p(\textbf{x}=\textbf{a},\boldsymbol{\eta}=\textbf{b}-\theta\textbf{a})\]
+			where $p$ is our joint likelihood function.
+			By assumption of mutual independence of the all elements of $\textbf{x}$ and $\boldsymbol{\eta}$, this is just equal to
+			\[\prod_{n=1}^{N}p(x_n=a_n)\cdot p(\eta_n=b_n-\theta a_n)\]
+			(via an abuse of notation, the $p$ here correspond to the individual likelihood functions to the relevant quantities inside the brackets)
+			In order to obtain the Fisher information, we take the log, differentiate twice w.r.t $\theta$, multiply by -1, and take the expectation. This yields
+			\[\frac{1}{\sigma_\eta^2}\sum_{n=1}^{N}E(x_0^2)\]
+			which is just equal to 
+			\[N\cdot\frac{\sigma_x^2}{\sigma_\eta^2}\]
+			Therefore the Cramer-Rao lower bound is 
+			\[\frac{\sigma_\eta^2}{N\cdot\sigma_x^2}\]
+			Given a set of observations $\textbf{x},\textbf{y}$, the value of $\hat\theta$ that minimises least squares is
+			\[\hat\theta = \frac{\textbf{x}\cdot\textbf{y}}{\textbf{x}\cdot\textbf{x}} = \frac{\textbf{x}\cdot(\theta \textbf{x} + \boldsymbol{\eta})}{\textbf{x}\cdot\textbf{x}} = \theta + \frac{\textbf{x}\cdot\boldsymbol{\eta}}{\textbf{x}\cdot\textbf{x}}\]
+			Some rearrangement reveals the variance of this variable to be
+			\[\sigma_\eta^2\cdot\mathbb{E}\left(\frac{1}{\textbf{x}\cdot \textbf{x}}\right)\]
+			We note that as $N\rightarrow\infty$, the variance of $\frac{\mathbf{x}\cdot\mathbf{x}}{N}$ decays to 0, and since this is a non-negative quantity, by Jensen's inequality we obtain
+			\[\mathbb{E}\left(\frac{N}{\mathbf{x}\cdot\mathbf{x}}\right)\rightarrow\frac{N}{\mathbb{E}(\mathbf{x}\cdot\mathbf{x})} = \frac{1}{\sigma_x^2}\] from above as $N\rightarrow\infty$. The desired result follows directly.
 		\end{answered}
 	\end{QandA}
 	
