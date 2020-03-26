@@ -115,6 +115,24 @@
 			We note that as $N\rightarrow\infty$, the variance of $\frac{\mathbf{x}\cdot\mathbf{x}}{N}$ decays to 0, and since this is a non-negative quantity, by Jensen's inequality we obtain
 			\[\mathbb{E}\left(\frac{N}{\mathbf{x}\cdot\mathbf{x}}\right)\rightarrow\frac{N}{\mathbb{E}(\mathbf{x}\cdot\mathbf{x})} = \frac{1}{\sigma_x^2}\] from above as $N\rightarrow\infty$. The desired result follows directly.
 		\end{answered}
+	
+		\item Let us consider the regression model
+		\[y_n=\theta^Tx_n + \eta_n,\quad n=1,2,3,...,n\]
+		where the noise samples $\eta=[\eta_1,...,\eta_N]^T$ come from a zero-mean Gaussian random vector with covariance matrix $\Sigma_\eta$. If X is our input matrix and y is our output vector, show that 
+		\[\hat\theta=(X^T\Sigma_\eta^{-1}X)^{-1}X^T\Sigma_\eta^{-1} y\]
+		is a sufficient estimate.
+		
+		\begin{answered}
+			Note that the above expression may be written as 
+			\[\theta+(X^T\Sigma_\eta^{-1}X)^{-1}X^T\Sigma_\eta^{-1} \eta\]
+			The covariance of this expression is just
+			\[(X^T\Sigma_\eta^{-1}X)^{-1}\]
+			\newline
+			The likelihood function here is given by 
+			\[p(y=a)=p(\eta=a-\theta^TX)=\frac{1}{((2\pi)^d |\Sigma_\eta|)^{\frac{1}{2}}}\prod_{n=1}^{N}e^\frac{-(a-\theta^TX)^T\Sigma_\eta^{-1} (a-\theta^TX)}{2}\]
+			From this, we obtain the Fisher information matrix as simply $(X^T\Sigma_\eta^{-1}X)$, and parameter efficiency via Cramer-Rao follows trivially.
+		\end{answered}
+		
 	\end{QandA}
 	
 \end{document}
