@@ -132,7 +132,26 @@
 			\[p(y=a)=p(\eta=a-\theta^TX)=\frac{1}{((2\pi)^d |\Sigma_\eta|)^{\frac{1}{2}}}\prod_{n=1}^{N}e^\frac{-(a-\theta^TX)^T\Sigma_\eta^{-1} (a-\theta^TX)}{2}\]
 			From this, we obtain the Fisher information matrix as simply $(X^T\Sigma_\eta^{-1}X)$, and parameter efficiency via Cramer-Rao follows trivially.
 		\end{answered}
+	
+		\item Assume a set of i.i.d. $X=\{x_1,x_2,...,x_N\}$ samples of a random variable[sic] with mean $\mu$ and variance $\sigma^2$. Define also the quantities
+		\[S_\mu:=\frac{1}{N}\sum_{n=1}^{N}x_n\]
+		\[S_{\sigma^2}:=\frac{1}{N}\sum_{n=1}^{N}(x_n-S_\mu)^2\]
+		\[\bar{S}_{\sigma^2}:=\frac{1}{N}\sum_{n=1}^{N}(x_n-\mu)^2\]
+		Show that is $\mu$ is considered to be known, a sufficient statistic for $\sigma^2$ is $\bar S_{\sigma^2}$. Moreover in the case where both $(\mu,\sigma^2)$ are unknown, then a sufficient statistic is the pair $(S_\mu,S_{\sigma^2})$
 		
+		\begin{answered}
+			This is not well-posed in its current form. It does however make sense if we constrain the $x_i$ to be drawn from a Gaussian distribution. 
+			
+			We note the the p.d.f of $X$ is 
+			\[p(X=x)=\frac{1}{(2\pi\sigma^2)^\frac{N}{2}}e^\frac{-\sigma^2(x-\mu)^T(x-\mu)}{2}\]
+			This can be written as
+			\[\frac{1}{(2\pi\sigma^2)^\frac{N}{2}}e^\frac{-\sigma^2 N\bar{S}_{\sigma^2}}{2}\]
+			which is a function of $\sigma$ and $\bar{S}_{\sigma^2}$ only. Therefore by Fisher-Neyman we have the first result.
+			For the second part, we note that the p.d.f may alternatively be written as
+			\[\frac{1}{(2\pi\sigma^2)^\frac{N}{2}}e^\frac{-N\sigma^2(S_{\sigma^2}-2\mu S_\mu+\mu^2+S_\mu^2)}{2}\]
+			which is solely a function of $\mu$, $\sigma^2$, $S_\mu$, and $S_{\sigma^2}$. Therefore we have the second result by Fisher-Neyman. 
+		\end{answered}
+	
 	\end{QandA}
 	
 \end{document}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.16)  21 DEC 2019 21:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.3.5)  29 MAR 2020 18:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -512,8 +512,8 @@ L/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 y\OT1/cmr/m/n/10 ))
 [11] [12] (./Chapter 2.aux) ) 
 Here is how much of TeX's memory you used:
  2000 strings out of 492982
- 23152 string characters out of 6134895
- 182256 words of memory out of 5000000
+ 23152 string characters out of 6134897
+ 182254 words of memory out of 5000000
  5569 multiletter control sequences out of 15000+600000
  13040 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -538,7 +538,7 @@ m/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
 7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.p
 fb>
-Output written on "Chapter 2.pdf" (12 pages, 228091 bytes).
+Output written on "Chapter 2.pdf" (12 pages, 228103 bytes).
 PDF statistics:
  123 PDF objects out of 1000 (max. 8388607)
  88 compressed objects within 1 object stream
