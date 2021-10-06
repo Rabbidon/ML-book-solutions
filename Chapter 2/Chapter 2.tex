@@ -50,7 +50,7 @@
 			This result is also reasonably clear from a symmetry argument.\\
 			\\
 			We also have
-			\[\int_{a}^{b}\frac{x^3}{b-a}dx=
+			\[\int_{a}^{b}\frac{x^2}{b-a}dx=
 			\left[\frac{x^3}{3(b-a)}\right]_{a}^{b}=\frac{a^2+ab+b^2}{3}\]
 			which gives us the variance as
 			\[\frac{a^2+ab+b^2}{3}-\frac{(a+b)^2}{4}=\frac{a^2-2ab+b^2}{12}=\frac{(b-a)^2}{12}\]		\end{answered}
@@ -63,7 +63,7 @@
 			\[\int x_i\frac{1}{(2\pi)^{\frac{k}{2}}|\Sigma|^{\frac{1}{2}}}exp\left(-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right)dx\]
 			$\Sigma$ is symmetric and positive definite, so by Cholesky composition we can write
 			\[\Sigma^{-1}=H^TH\]
-			If we set $y=H(x-\mu)$ then $dx=|H^{-1}|dy$,
+			If we set $y=H(x-\mu)$ then $dx=|H^{-1}|dy=|\Sigma|^\frac{1}{2}dy$,
 			and changing variables in the above integral gives us
 			\[\int (H^{-1}_{ik}y_k+ \mu_i)\frac{1}{(2\pi)^{\frac{k}{2}}}exp\left(-\frac{1}{2}y\cdot y\right)dy\]
 			We now use symmetry to discard the $Hy$ and consider all elements to obtain our expectation as
@@ -71,10 +71,10 @@
 			The $(i,j)$th element of the covariance matrix is given by
 			\[\int(x_i-\mu_i)(x_j-\mu_j) \frac{1}{(2\pi)^{\frac{k}{2}}|\Sigma|^{\frac{1}{2}}}exp\left(-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right)dx\]
 			Performing the previous substitution gives
-			\[\int H^{-1}_{ia}y_aH^{-1}_{jb}y_b \frac{1}{(2\pi)^{\frac{k}{2}}}exp\left(-\frac{1}{2}y\cdot y\right)dy\]
-			This is where the real power of this substitution comes in - we could have derived the mean without it just using the symmetry around $\mu$, but here we would have been stuck. Observe that the substitution has made our integral separable. For any fixed $(i.j)$ we write this integral as the sum of integrals indexed by $a$ and $b$ - note that the value of any constituent integral with $a!=b$ is necessarily 0 by symmetry in our separated integrals. Therefore we just sum over all cases where $a=b$, and play with indices in the result, to get the value of the integral as \[\int (H^{-1}(H^T)^{-1})_{ij}(y\cdot y) \frac{1}{(2\pi)^{\frac{k}{2}}}exp\left(-\frac{1}{2}y\cdot y\right)dy\]
-			Using results for variance of a 1D-Gaussian and separating the integrand, this simplifies to
-			\[(HH^T)^{-1}_{ij}=\Sigma_{ij}\]distribution 
+			\[\int H^{-1}_{ia}y_aH^{-1}_{jb}y_b \frac{1}{(2\pi)^{\frac{k}{2}}}exp\left(-\frac{1}{2}y\cdot y\right)dy\] where we are implicitly summing over both $a$ and $b$. Consider what happens in our implicit sum whenever $a \neq b$ - the integrand is an odd function of $y_a$ (and $y_b$ - it doesn't matter which one we pick) - and therefore the whole integral evaluates to 0. Therefore in order to evaluate the integral, we just sum over all cases where $a=b$. This gives the value of the integral as
+			\[\sum_a\left( H^{-1}_{ia}(H^{T}_{aj})^{-1}\cdot\int\frac{y_a\cdot y_a}{(2\pi)^{\frac{1}{2}}}exp\left(-\frac{1}{2}y_a\cdot y_a\right)dy_a \cdot\prod_{b\neq a}\left(\int\frac{1}{(2\pi)^{\frac{1}{2}}}exp\left(-\frac{1}{2}y_b\cdot y_b\right)dy_b\right)\right)\]
+			All terms in the rightmost product evaluate to 1 (consider the pdf of a 1D Gaussian). The middle term also evaluates to 1 (consider the variance of a 1D Gaussian), and therefore the sum evaluates to
+			\[\sum_a H^{-1}_{ia}(H^{T}_{aj})^{-1} = (HH^T)^{-1}_{ij}i=\Sigma_{ij}\]
 			And so the covariance matrix is just
 			\[\Sigma\] \end{answered}
 		
@@ -105,13 +105,13 @@
 			The beta distribution $Beta(a,b)$ is defined on $[0,1]$ by the probability density function
 			\[\frac{x^{a-1}(1-x)^{b-1}}{B(a,b)}\]
 			We are required to prove that 
-			\[B(a,b)=\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\]
+			\[B(a,b)=\frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}\]
 			This is equivalent to showing
 			\[\int_\mathbb{R}x^{a-1}(1-x)^{b-1}dx=\frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}\]
 			since any probability distribution must integrate to 1 over its domain.
 			The gamma function is defined by
-			\[\Gamma(a)=\int_\mathbb{R}x^{a-1}e^{-x}\]
-			so we can multiply through by $\Gamma(a+b)$ in the above expression and expand to obtain our proposition as an equality between two double integrals:
+			\[\Gamma(a)=\int_\mathbb{R}x^{a-1}e^{-x}dx\]
+			so we can multiply through by $\Gamma(a+b)$ and expand to obtain our proposition as an equality between two double integrals:
 			\[\int_\mathbb{R}\int_\mathbb{R}x^{a-1}(1-x)^{b-1}y^{a+b-1}e^{-y}dxdy=\int_\mathbb{R}\int_\mathbb{R}u^{a-1}e^{-u}v^{b-1}e^{-v}dudv\]
 			On the right-hand side we can substitute $u=xy$ and $v=(1-x)y$, which gives us the following relation between area elements:
 			\[dudv=\begin{vmatrix}
@@ -142,21 +142,20 @@
 	\begin{answered}
 		The expectation is given by 
 		\[\int_0^{\infty} \frac{b^a}{\Gamma(a)}x^ae^{-bx}dx\]
-		Setting $u = bx$ and substituting into the above integral yields 
-		\[\int_0^{\infty} \frac{u^{a}}{b\Gamma(a)}e^{-u}du=\frac{\Gamma(a+1)}{b\Gamma(a)}=\frac{a}{b}\]
-		where the last equality comes from the relation $\Gamma(a+1)=a\Gamma(a)$\\
-		\\
+		We can rewrite this as
+		\[\frac{a}{b}\int_0^{\infty}\frac{b^{a+1}}{a\Gamma(a)}x^a e^{-bx}dx\]
+		Since $a\Gamma(a)=\Gamma(a+1)$, the integrand is simply the pdf of the gamma distribution with parameters $a+1,b$, and therefore the integral evaluates to 1. The desired result immediately follows.
 		The variance is given by
 		\[\int_0^{\infty} \frac{b^a}{\Gamma(a)}x^{a+1}e^{-bx}dx-\frac{a^2}{b^2}\]
-		We make the same integral substitution as above which causes the expression to reduce to
-		\[\int_0^{\infty} \frac{u^{a+1}}{b^2\Gamma(a)}e^{-u}du-\frac{a^2}{b^2}=\frac{\Gamma(a+2)}{\Gamma(a)b^2}-\frac{a^2}{b^2}=\frac{a}{b^2}\]
-		since $\Gamma(a+2)=a(a+1)\Gamma(a)$
+		We rewrite this expression as 
+		\[\frac{a(a+1)}{b^2}\int_0^{\infty}\frac{b^{a+2}}{a(a+1)\Gamma(a)}e^{-bx}dx-\frac{a^2}{b^2}\] Using the fact that $\Gamma(a+2)=a(a+1)\Gamma(a)$, we see that the integrand is just the pdf of a gamma distribution with parameters $a+2,b$. Therefore we calculate the original variance as 
+		\[\frac{a(a+1)-a}{b^2}=\frac{a}{b^2}\]
 	\end{answered}
 
 	\item Show that the mean and covariance of a Dirichlet pdf with parameters $a_k$, $k=1,2,...,K$ are given by
 	\[\frac{a}{\bar{a}}\]
 	and
-	\[\frac{\bar{a}\delta_3a-aa^T}{\bar{a}^2(1-\bar{a})}\]
+	\[\frac{\bar{a}\delta_3a-aa^T}{\bar{a}^2(1+\bar{a})}\]
 	respectively\\
 	\\
 	($\bar{a}$ is the sum of all elements of $a$ and $\delta_3$ is the 3D Kronecker delta)
@@ -172,8 +171,9 @@
 		\[\int_Dx_i\frac{\Gamma(\bar{a})}{\Gamma(a_1)...\Gamma(a_k)}\prod_{k=1}^Kx_k^{a_k-1}dx\]
 		If we define a vector $b$ s.t. $b_j=a_j$ for $j\neq i$, and $b_i=a_i+1$, then we note that the above integral is just
 		\[\int_D\frac{\Gamma(\bar{a})}{\Gamma(a_1)...\Gamma(a_k)}\prod_{k=1}^Kx_k^{b_k-1}dx\]
+		We now define $\bar{b}$ as the sum of the elements of $b$.
 		$\bar{b}=\bar{a}+1$, so we can use the our nifty relation on gammas \[\Gamma(x+1)=x\Gamma(x)\]
-		to simplify the above to
+		to rewrite our integral as
 		\[\frac{a_i}{\bar{a}}\int_D\frac{\Gamma(\bar{b})}{\Gamma(b_1)...\Gamma(b_k)}\prod_{k=1}^Kx_k^{b_k-1}dx\]
 		The integrand is just the pdf of the Dirichlet distribution with parameter vector $b$, and so the integral evaluates to 1. This gives our mean vector as just
 		\[\frac{a}{\bar{a}}\]
@@ -192,7 +192,7 @@
 		
 	\item Show that the sample mean of $N$ i.i.d. samples, is an unbiased estimator with variance that tends to zero asymptotically as $N\rightarrow\infty$
 	\begin{answered}
-		Suppose we are sampling from an underlying distribution $A$, and our $i$th samples is denoted by $A_i$ - all independent and distributed as $A$. Our sample mean is defined by
+		Suppose we are sampling from an underlying distribution $A$, and our $i$th sample is denoted by $A_i$ - all independent and distributed as $A$. Our sample mean is defined by
 		\[\bar{A}=\frac{1}{n}\sum_{i=1}^{K}A_i\]
 		Expectation distributes over all sums, therefore
 		\[E(\bar{A})=\mathbb{E}\left(\frac{1}{n}\sum_{i=1}^{K}A_i\right)=\frac{1}{n}\sum_{i=1}^{K}\mathbb{E}(A_i)=\frac{n*\mathbb{E}(A)}{n}=\mathbb{E}(A)\]
@@ -219,43 +219,31 @@
 		\\
 		The second part of the assertion is not true (consider two processes with a constant value of $\frac{1}{2}$). The mathematical expression should probably read
 		\[r_u(0)r_v(0)\geq|r_{uv}(k)|^2\]
-		Expanding out the left-hand side gives us (in suffix notation)
-		\[\mathbb{E}(u_iu_i)\mathbb{E}(v_jv_j)\]
-		while the right-hand side expands to
-		\[\mathbb{E}(u_iv_iu_jv_j)\]
-		where $i$ and $j$ on each side iterate over the same set of values. Now, if we fix $a,b$ we note that
-		\[\mathbb{E}(u_a^2)\mathbb{E}(v_b^2)+\mathbb{E}(u_b^2)\mathbb{E}(v_a^2)\geq(\mathbb{E}(u_av_b))^2+(\mathbb{E}(u_bv_a))^2\]
-		by Cauchy-Schwarz. The right-hand side is equal to 
-		\[\mathbb{E}((u_av_b-u_bv_a)^2)+2\mathbb{E}(u_av_au_bv_a)\geq2\mathbb{E}(u_av_au_bv_a)\]
-		Now if we take the resulting inequality and sum over all values of $a,b$, we obtain (in suffix notation)
-		\[2\mathbb{E}(u_iu_i)\mathbb{E}(v_jv_j)\geq2\mathbb{E}(u_iv_iu_jv_j)\]
-		Dividing through by 2 gives the result we want.
+		The left-hand side of the inequality is equal to
+		\[\mathbb{E}(u_ku_k)\mathbb{E}(v_0v_0)\]
+		while the right-hand side is equal to
+		\[|\mathbb{E}(u_kv_0)|^2\]
+		Therefore the result follows trivially from the Cauchy-Schwarz inequality.
+		
 	\end{answered}
 
-	\item Show that the autocorrelation of the output of a linear system, with impulse response $w_n,n\in\mathbb{Z}_n$ is related to the autocorrelation of the input WSS process, via
+	\item Show that the autocorrelation of the output of a linear system, with impulse response $w_n,n\in\mathbb{Z}$ is related to the autocorrelation of the input WSS process, via
 	\[r_d(k)=r_u(k)* w_k* w^*_{-k}[sic]\]
 	\begin{answered}
-		This is wrong - you can't convolve over scalars. What is actually required to be shown is
-		\[r_d(k)=(r_u* w* \bar{w}^*)_k\]
-		where $\bar{w}$ is the sequence obtained by flipping w about the origin and $r_u$ is a sequence defined by $(r_u)_i=r_u(i)$.\\
+		This is not correct - the conjugates have been botched. We will derive the actual result below.\\
 		\\
 		By definition
-		\[d_k=\sum_{i=-\infty}^\infty u_i^*w_{k-i}\]
-		Therefore we may write
-		\[r_d(k)=\mathbb{E}(d_0d_k)=\mathbb{E}\left(\sum_{i=-\infty}^\infty\sum_{j=-\infty}^\infty u_i^*w_{-i}u_j^*w_{k-j}\right)\]
-		Since $j$ is in the inner loop, we can make the change of variables $a=j-i$ and obtain
-		\[\mathbb{E}\left(\sum_{i=-\infty}^\infty\sum_{a=-\infty}^\infty u_i^*w_{-i}u_{a+i}^*w_{k-a-i}\right)\]
-		We take the expectation inside to obtain
-		\[\sum_{i=-\infty}^\infty\sum_{a=-\infty}^\infty \mathbb{E}(u_iu_{a+i})^*w_{-i}w_{k-a-i}=\sum_{i=-\infty}^\infty\sum_{a=-\infty}^\infty r_u(a)^*w_{-i}w_{k-a-i}\]
-		We can now switch the sums, use the fact that $r_u(a)$ is independent of $i$, and subtract k from the indices of the inner sum by k (which doesn't affect the summation indices) to obtain
-		\[\sum_{a=-\infty}^\infty r_u(a)^*\sum_{i=-\infty}^\infty w_{-i}w_{k-a-i}\]
-		We now denote $\bar{w}$ as the sequence $w$ reversed about the origin, giving our expression as
-		\[\sum_{a=-\infty}^\infty r_u(a)^*\sum_{i=-\infty}^\infty \bar{w}_{i}w_{k-a-i}\]
-		This is just 
-		\[\sum_{a=-\infty}^\infty r_u(a)^*(\bar{w}^**w)_{k-a}\]
-		which is just 
-		\[(r_u* w* \bar{w}^*)_k\]
-		as required.
+		\[r_d(k)=\mathbb{E}(d_kd_0^*)=\mathbb{E}\left(\sum_{i=-\infty}^{\infty}\sum_{j=-\infty}^{\infty}w_i^*u_{k-i}w_ju_{-j}^*\right)\]
+		We now make the substitution $j=i-a$, giving us
+		\[r_d(k)=\sum_{a=-\infty}^{\infty}\sum_{i=-\infty}^{\infty}\mathbb{E}(u_{k-i}u_{a-i}^*)w_i^*w_{i-a}\]
+		Note that $\mathbb{E}(u_{k-i}u_{a-i}^*)=r_u(k-a)$, and this is independent of i, so we have
+		\[r_d(k)=\sum_{a=-\infty}^{\infty}r_u^*(k-a)\sum_{i=-\infty}^{\infty}w_i^*w_{i-a}\]
+		The inner sum is just $w_a*w_{-a}$, so
+		\[r_d(k)=\sum_{a=-\infty}^{\infty}r_u(k-a)(w_a*w_{-a})\]
+		Now we substitute $n=k-a$ to obtain
+		\[r_d(k)=\sum_{n=-\infty}^{\infty}r_u(n)(w_{k-n}*w_{n-k})\]
+		which simplifies to
+		\[r_d(k)=r_u^*(k)*w_k*w_{-k}\]
 	\end{answered}
 
 	\item Show that 
@@ -270,7 +258,7 @@
 	\[I(X,Y)\geq 0\]
 	\begin{answered}
 		The average mutual information $I(X,Y)$ is defined by
-		\[I(X,Y)=\sum_{x\in X}\sum_{y\in Y}P(x,y)\log\left(\frac{P(x,y)}{P(x)P(y)}\right)\].
+		\[I(X,Y)=\sum_{x\in X}\sum_{y\in Y}P(x,y)\log\left(\frac{P(x,y)}{P(x)P(y)}\right)\]
 		We can restrict this sum to combinations of $x,y$ s.t. $P(x,y)>0$. This condition implies $P(x)P(y)>0$
 		Now we can use the solution to problem 2.13, since 
 		\[\sum_{x,y\ s.t.\ P(x,y)>0}P(x,y)=1\]
@@ -295,18 +283,31 @@
 
 	\item Show that the maximum value of the entropy of a random variable occurs if all possible outcomes are equiprobable
 	\begin{answered}
-		Suppose that X is the random variable on $M$ outcomes with the highest entropy (exists via compactness argument). Suppose $X$ takes outcome $x_i$ with probability $p_i$ for $i=1,2,...,M$. Now suppose that not all the $p_i$ are equal. By reordering, $p_1< p_2$. Now we define a random variable $Y$ taking the same values as $X$ with the same probabilities, apart from $x_1,x_2$, which $Y$ takes with probabilities $\frac{p_1+p_2}{2}$ each. We note that the function $f(x)=x\log(x)$ is strictly convex in the range $[0,1]$ (second derivative is $1/x$) so we get
+		First we show that a p.d.f with greatest entropy exists. We note that $-x\log x$ is bounded on $(0,1]$, and therefore any sequence of random variables (on a finite state space) cannot have unboundedly increasing entropy.\\
+		\\
+		Now, consider a sequence of random variables with monotonically increasing entropy. Note that all these random variables are members of $[0,1]^n$, where $n$ is the size of the state space. $[0,1]^n$ is compact, so we can find a convergent subsequence from our sequence of random variables. Entropy is a continuous function of distribution, so the "entropy" of the limit is guaranteed to be the limit of the entropies. All that remains to check is that the limit of our sequence is a valid pdf - we only know that is is a member of $[0,1]^n$. However, we note that sum and minimum element are both continuous functions in $[0,1]^n$, and that the defining features of a random variable (considered as a member of $[0,1]^n$) are that all elements individually exceed 0 and sum to 1. This is true of every single member of our convergent subsequence, and therefore holds for the limit. Therefore we have constructed a random variable with entropy greater than that of every random variable in our original sequence. Thus there must exist a random variable on this state space that maximises entropy.\\
+		\\
+		Suppose that X is the random variable on $M$ outcomes with the highest entropy. Suppose $X$ takes outcome $x_i$ with probability $p_i$ for $i=1,2,...,M$. Now suppose that not all the $p_i$ are equal. By reordering, $p_1< p_2$. Now we define a random variable $Y$ taking the same values as $X$ with the same probabilities, apart from $x_1,x_2$, which $Y$ takes with probabilities $\frac{p_1+p_2}{2}$ each. We note that the function $f(x)=x\log(x)$ is strictly convex in the range $[0,1]$ (second derivative is $1/x$) so we get
 		\[\frac{p_1+p_2}{2}\log\left(\frac{p_1+p_2}{2}\right)<\frac{1}{2}(p_1\log(p_1)+p_2\log(p_2))\]
 		which when we consider the expressions for entropy of both $X$ and $Y$, tells us that $X$ has a lower entropy than $Y$. This is a contradiction, so all the $p_i$ must be equal.$\qed$
 		
 	\end{answered}
 
-	\item Show that of all the p.d.f.s that describe a random variable in an interval $[a,b]$, the uniform one maximises the entropy.
+	\item Show that of all the pdfs that describe a random variable in an interval $[a,b]$, the uniform one maximises the entropy.
 	\begin{answered}
-		We can use Jensen's inequality here - given a convex function $\phi$ and a real-valued random variable $X$, we have
-		\[\phi(\mathbb{E}(X))\leq \mathbb{E}(\phi(X))\] We note that $f(x)=x\log(x)$ is a convex function, and so given any p.d.f $\psi$, we have 
-		\[\mathbb{E}(\psi)\log(\mathbb{E}(\psi))\leq \mathbb{E}(\psi\log(\psi))\] Multiplying through by -1, and noting that $\mathbb{E}(\psi)=\frac{1}{b-a}$, we directly obtain
-		\[entropy((b-a)^{-1})\geq entropy(\psi)\] $\psi$ was arbitrary, so we have that the uniform distribution on $[a,b]$ has the greatest entropy of all distributions on $[a,b]$.$\qed$ 
+		Jensen's inequality states that if $(\Omega,A,\mu)$ is a probability space, then for a real-valued $\mu$-integrable function $g$ and real-valued convex function $\phi$
+		\[\int_\Omega\phi\circ g\cdot d\mu\geq\phi\left(\int_\Omega g\cdot d\mu\right)\]
+		Now, given a random variable X with pdf $p$ defined on $[a,b]$, we obtain the entropy of $X$ as
+		\[-\int_a^bp(x)\log(p(x))dx\]
+		We can make a change of variables $y=\frac{x-a}{b-a}$ to rewrite this as
+		\[-\int_0^1(b-a)\cdot p((b-a)y+a)\log(p((b-a)y+a))dy\]
+		We note that is an integral the probability space $[0,1]$ (equipped with the uniform measure). We also note that $g(y)$ = $p((b-a)y+a)$ is integrable with respect to this measure (integrates to $\frac{1}{b-a}$) and that $\phi(x)=x\log(x)$ is convex on the real line (we will only be applying it to positive $x$ so this is valid). Thus the integral is exactly of the form required to use Jensen's inequality, and we find that
+		\[entropy(X)\leq-(b-a)I\log(I)\]
+		where
+		\[I=\int_0^1p((b-a)y+a)dy\]
+		This is equal to $\frac{1}{b-a}$, so we have
+		$entropy(X)\leq -log(\frac{1}{b-a})$
+		The right-hand side is the entropy of the uniform pdf on $[a,b]$, so we have proven our proposition.
 	\end{answered}
 	
 	\end{QandA}
