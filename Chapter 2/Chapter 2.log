@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Debian) (preloaded format=pdflatex 2021.9.16)  6 OCT 2021 16:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Debian) (preloaded format=pdflatex 2021.9.16)  12 OCT 2021 14:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -190,23 +190,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 167--171
 
  []
 
-[6] [7]
-Underfull \hbox (badness 10000) in paragraph at lines 214--217
-
- []
-
-[8]
-Underfull \hbox (badness 10000) in paragraph at lines 217--221
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 233--236
+[6] [7] [8]
+Underfull \hbox (badness 10000) in paragraph at lines 227--230
 
  []
 
 [9]
-Overfull \hbox (0.30685pt too wide) detected at line 269
+Overfull \hbox (0.30685pt too wide) detected at line 263
 [] \OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x; y\OT1/cmr/m/n/10 )\OM
 L/cmm/m/it/10 log\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m
 /it/10 x; y\OT1/cmr/m/n/10 )) \OMS/cmsy/m/n/10 ^^U [] \OML/cmm/m/it/10 P\OT1/cm
@@ -216,12 +206,12 @@ L/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 y\OT1/cmr/m/n/10 ))
  []
 
 [10]
-Underfull \hbox (badness 10000) in paragraph at lines 286--291
+Underfull \hbox (badness 10000) in paragraph at lines 280--285
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 286--291
+Underfull \hbox (badness 10000) in paragraph at lines 280--285
 
  []
 
@@ -254,7 +244,7 @@ m/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
 7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.p
 fb>
-Output written on "Chapter 2.pdf" (12 pages, 229826 bytes).
+Output written on "Chapter 2.pdf" (12 pages, 229399 bytes).
 PDF statistics:
  123 PDF objects out of 1000 (max. 8388607)
  88 compressed objects within 1 object stream

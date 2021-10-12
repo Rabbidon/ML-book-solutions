@@ -211,19 +211,13 @@
 	and that for jointly-WSS processes
 	\[r_u(0)r_v(0)\geq|r_{uv}(k)|,\forall k\in \mathbb{Z}[sic]\]
 	\begin{answered}
-		A WSS (Wide-Sense Stationary) process is defined as one for which $\mu_n=\mu$ $\forall n$ for some $\mu$ and for which $r(n,n-k)=r(k)$ $\forall n,k$ ($r(a,b)$ is the autocorrelation at times $a,b$).\\
-		\\
-		We define a process by the time-indexed sequence of random variables $u_t$, where $t$ is time. Suppose that it is WSS. Consider the random variable $(u_k-u_0)^2$ for arbitrary $k$. It is non-negative, so must have non-negative mean. Therefore
-		\[0\leq \mathbb{E}((u_k-u_0)^2)=\mathbb{E}(u_ku_k)-2\mathbb{E}(u_ku_0)+\mathbb{E}(u_0u_0)=2r(0)-2r(k)\]
-		This immediately gives $r(0)\geq r(k)$.\\
-		\\
-		The second part of the assertion is not true (consider two processes with a constant value of $\frac{1}{2}$). The mathematical expression should probably read
+		We first consider the second part of the assertion. Note that it is not true (consider two processes with a constant value of $\frac{1}{2}$). The mathematical expression should probably read
 		\[r_u(0)r_v(0)\geq|r_{uv}(k)|^2\]
 		The left-hand side of the inequality is equal to
-		\[\mathbb{E}(u_ku_k)\mathbb{E}(v_0v_0)\]
+		\[\mathbb{E}(u_ku_k^*)\mathbb{E}(v_0v_0^*)\]
 		while the right-hand side is equal to
-		\[|\mathbb{E}(u_kv_0)|^2\]
-		Therefore the result follows trivially from the Cauchy-Schwarz inequality.
+		\[|\mathbb{E}(u_kv_0^*)|^2\]
+		Therefore the result follows trivially from the Cauchy-Schwarz inequality, since $\langle u,v\rangle =E(uv^*)$ is an inner product space. The first part of the assertion is a special case of this where $u=v$ (a WSS process is necessrily WSS with itself).
 		
 	\end{answered}
 
