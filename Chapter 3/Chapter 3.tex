@@ -39,11 +39,11 @@
 		\item Let $x$ be random variable uniformly distributed on $[0,\frac{1}{\theta}],\theta>0$. Assume that $g$ is a Lebesgue measurable function on $[0,\frac{1}{\theta}]$. Show that if $\hat{\theta}=g(x)$ is an unbiased estimator, then
 		\[\int_0^\frac{1}{\theta}g(x)dx=1\]
 		\begin{answered}
-			Assume that $\hat{\theta}$ is an unbiased estimator. Then
-			\[\forall\theta,\theta=\mathbb{E}(\hat{\theta})=\mathbb{E}(g(x))=\int_0^\frac{1}{\theta}g(x)\phi(x)dx\]
+			Assume that $\hat{\theta}$ is an unbiased estimator. Then regardless of the value of $\theta$
+			\[\theta=\mathbb{E}(\hat{\theta})=\mathbb{E}(g(x))=\int_0^\frac{1}{\theta}g(x)\phi(x)dx\]
 			where $\phi$ is the p.d.f of $x$. Since $x$ is uniform, the p.d.f is just constantly $\theta$ This directly gives 
-			\[\int_0^\frac{1}{\theta}g(x)dx=1\] We note that there is no function $g(x)$ s.t. this holds. We note that our condition gives 
-			\[\int_a^bg(x)dx=0\ \forall 0<a<b\] Therefore
+			\[\int_0^\frac{1}{\theta}g(x)dx=1\] We note that there is no function $g(x)$ s.t. this holds for all $\theta$. We note that our condition gives 
+			\[\int_a^bg(x)dx=0\ \forall (0<a<b)\] Therefore
 			\[1=\int_0^\frac{1}{\theta}g(x)dx=\sum_{i=0}^\infty\int_\frac{2^{i+1}}{\theta}^\frac{2^i}{\theta}g(x)dx=0 \]
 			which is a contradiction.
 		\end{answered}
@@ -67,24 +67,28 @@
 			by unbiasedness. Similarly, the MSE of $\hat{\theta}_b$ is
 			\[\mathbb{E}((\hat{\theta}_b-\theta_0)^2)=(1+\alpha)^2\mathbb{E}(\hat{\theta}_u^2)-(1+2\alpha)\theta_0^2=(1+\alpha)^2\text{MSE}(\hat{\theta_u})+\alpha^2\theta_0^2\]
 			Therefore the condition we want occurs for exactly
-			\[(1+\alpha)^2\text{MSE}(\hat{\theta_u})-\alpha^2\theta_0^2<\text{MSE}(\hat{\theta_u})\]
-			This reduces to
-			\[\alpha((\text{MSE}(\hat{\theta_u})+\theta_0^2)\alpha)+2\text{MSE}(\hat{\theta_u}))<0\]
-			Which gives most of the above inequality. The left-most part is trivial from the fact that $\text{MSE}(\hat{\theta_u})$ and $\theta_0^2$ are both non-negative.
+			\[(1+\alpha)^2\text{MSE}(\hat{\theta_u})+\alpha^2\theta_0^2<\text{MSE}(\hat{\theta_u})\]
+			which rearranges to 
+			\[\alpha((\text{MSE}(\hat{\theta_u})+\theta_0^2)\alpha+2\text{MSE}(\hat{\theta_u}))<0\]
+			This occurs only iff exactly one of $\alpha$ and $(\text{MSE}(\hat{\theta_u})+\theta_0^2)\alpha+2\cdot\text{MSE}(\hat{\theta_u})$ is positive. Note also that $\alpha>0$ directly implies $(\text{MSE}(\hat{\theta_u})+\theta_0^2)\alpha+2\cdot\text{MSE}(\hat{\theta_u})>0$. Thus our proposed condition holds iff
+			\[-\frac{2\text{MSE}(\hat{\theta_u})}{\text{MSE}(\hat{\theta_u})+\theta_0^2}<\alpha<0\]
+			as required. The final leftmost inequality stems from the fact that 
+			\[\frac{\text{MSE}(\hat{\theta_u})}{\text{MSE}(\hat{\theta_u})+\theta_0^2}<1\]
+			
 		\end{answered}
 	
 		\item Show that for the setting of Problem 3.4, the optimal value of $\alpha$ is equal to 
 		\[\alpha_*=-\frac{1}{1+\frac{\theta_0^2}{var(\hat{\theta}_u)}}\]
 		\begin{answered}
-			We note that our MSE for the biased estimator is a quadratic in $alpha$. Therefore we can just pick the unique value of $\alpha$ for which the derivative is 0, and we obtain the minimum possible MSE. The derivative is
-			\[2(\text{MSE}(\hat{\theta_u})+\hat{\theta}_0^2)\alpha+2\text{MSE}(\hat{\theta_u})\]
-			which trivially rearranges to the required result.
+			We note that our MSE for the biased estimator is a quadratic in $\alpha$. Therefore we can just pick the unique value of $\alpha$ for which the derivative is 0, and we obtain the minimum possible MSE. The derivative is
+			\[2(\text{MSE}(\hat{\theta_u})+\theta_0^2)\alpha+2\text{MSE}(\hat{\theta_u})\]
+			which rearranges to the required result.
 		\end{answered}
 	
 		\item Show that the regularity condition for the Cramer-Rao lower bound holds true if the order of differentiation and integration can be interchanged.
 		\begin{answered}
-			Note that $\frac{\partial\:\log (p(x|\theta))}{\partial \theta} = \frac{1}{p(x|\theta)}\cdot\frac{\partial\:p(x|\theta)}{\partial \theta}$. This gives \[\mathbb{E}\left(\frac{\partial\:\log (p(x|\theta))}{\partial \theta}\right)=\int_{x\in X\cap\theta} p(x|\theta)\cdot\frac{1}{p(x|\theta)}\cdot\frac{\partial\:p(x|\theta)}{\partial \theta}\;d\mu=\int_{x\in X\cap\theta}\frac{\partial\:p(x|\theta)}{\partial \theta}\;d\mu\]
-			where $X\cap\theta$ is the probability space created by intersecting the probability space $X$ with the event $\theta$, and $\mu$ is its associated probability measure.
+			Note that $\frac{\partial\:\log (p(x|\theta))}{\partial \theta} = \frac{1}{p(x|\theta)}\cdot\frac{\partial\:p(x|\theta)}{\partial \theta}$. This gives \[\mathbb{E}\left(\frac{\partial\:\log (p(x|\theta))}{\partial \theta}\right)=\int_{x\in X\cap\theta} p(x|\theta)\cdot\frac{1}{p(x|\theta)}\cdot\frac{\partial\:p(x|\theta)}{\partial \theta}\;dx=\int_{x\in X\cap\theta}\frac{\partial\:p(x|\theta)}{\partial \theta}\;dx\]
+			where $X\cap\theta$ is the probability space created by intersecting the probability space $X$ with the event $\theta$, and $\mu$ is its associated probability measure. (We fix $\theta$ to be a single event - we are using the frequentist concept of a "true" value for $\theta$)
 			
 			Now, if we assume that differentiation and integration can be interchanged, then this is equal to
 			\[\frac{\partial}{\partial\theta}\int_{x\in X\cap\theta}p(x|\theta)\;d\mu\]

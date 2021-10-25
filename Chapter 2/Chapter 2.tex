@@ -222,22 +222,30 @@
 	\end{answered}
 
 	\item Show that the autocorrelation of the output of a linear system, with impulse response $w_n,n\in\mathbb{Z}$ is related to the autocorrelation of the input WSS process, via
-	\[r_d(k)=r_u(k)* w_k* w^*_{-k}[sic]\]
+	\[r_d(k)=r_u(k)* w_k* w^*_{-k}\]
 	\begin{answered}
-		This is not correct - the conjugates have been botched. We will derive the actual result below.\\
-		\\
 		By definition
 		\[r_d(k)=\mathbb{E}(d_kd_0^*)=\mathbb{E}\left(\sum_{i=-\infty}^{\infty}\sum_{j=-\infty}^{\infty}w_i^*u_{k-i}w_ju_{-j}^*\right)\]
 		We now make the substitution $j=i-a$, giving us
 		\[r_d(k)=\sum_{a=-\infty}^{\infty}\sum_{i=-\infty}^{\infty}\mathbb{E}(u_{k-i}u_{a-i}^*)w_i^*w_{i-a}\]
 		Note that $\mathbb{E}(u_{k-i}u_{a-i}^*)=r_u(k-a)$, and this is independent of i, so we have
-		\[r_d(k)=\sum_{a=-\infty}^{\infty}r_u^*(k-a)\sum_{i=-\infty}^{\infty}w_i^*w_{i-a}\]
+		\[r_d(k)=\sum_{a=-\infty}^{\infty}r_u(k-a)\sum_{i=-\infty}^{\infty}w_i^*w_{i-a}\]
 		The inner sum is just $w_a*w_{-a}$, so
 		\[r_d(k)=\sum_{a=-\infty}^{\infty}r_u(k-a)(w_a*w_{-a})\]
 		Now we substitute $n=k-a$ to obtain
 		\[r_d(k)=\sum_{n=-\infty}^{\infty}r_u(n)(w_{k-n}*w_{n-k})\]
 		which simplifies to
-		\[r_d(k)=r_u^*(k)*w_k*w_{-k}\]
+		\[r_d(k)=r_u
+		(k)^**w_k*w_{-k}\]
+		We note that 
+		\[(a^**b^*)=(a*b)^*=(b*a)\]
+		Therefore we have for any $a,b,c$
+		\[(a^**b)*c=(c*(a^**b))^*=c^**(a^**b)^*=c^**b*a^*\]
+		By applying this relation twice, we see that
+		\[r_u
+		(k)^**w_k*w_{-k}=w_{-k}^**w_k*r_u(k)^*=r_u
+		(k)*w_k*w_{-k}^*\]
+		as required.
 	\end{answered}
 
 	\item Show that 
