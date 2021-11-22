@@ -189,12 +189,16 @@
 		\[\hat{\theta}_0=\bar{y}-\sum_{i=1}^l\hat{\theta}_i\bar{x}_i\]
 		
 		\begin{answered}
-			The derivative of the first expression is necessarily 0 when evalutated at its unique minimiser ${\boldsymbol{\hat{\theta}}}$. By evaluating the derivative with respect to $\theta_0$ at the minimiser, we immediately get
+			The derivative of the first expression is necessarily 0 when evalutated at any minimiser ${\boldsymbol{\hat{\theta}}}$. By evaluating the derivative with respect to $\theta_0$ at the minimiser, we immediately get
 			\[\hat{\theta}_0=\bar{y}-\sum_{i=1}^l\hat{\theta}_i\bar{x}_i\]
 			Substituting this into the expression to be minimised reveals that minimising over the other $N$ components is exactly equivalent to solving the first constraint of the second optimisation problem. We already know that the minimiser to our first problem meets the second constraint of the second problem, and therefore will solve the problem in its entirety.
 			
-			Each of these problems has a unique solution, so proving the implication one way (minimiser of first problem also solves second problem) is enough to show that the two problems are completely equivalent.
+			The second optimisation problem has a unique solution (can be seen by explicitly expressing as a quadratic form), so the above implication shows that the first problem also has a unique solution. Thus the two problems are exactly equivalent.
 		\end{answered}
+	
+		\item
+		
+		
 	\end{QandA}
 	
 \end{document}
