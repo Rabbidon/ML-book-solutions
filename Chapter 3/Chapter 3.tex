@@ -20,6 +20,23 @@
 	
 	\noindent%
 	\begin{QandA}
+		\item Prove the least squares optimal solution for the linear regression case given in Eq. (3.13).
+		\begin{answered}
+			We seek to find the value of $\boldsymbol{\theta}$ that minimises
+			\[\sum_{n=1}^N(y_n-\boldsymbol{\theta}^T\textbf{x}_n)^2\]
+			This is a differentiable function w.r.t all components of $\boldsymbol{\theta}$. Moreover, note that it is quadratic with a positive quadratic coefficient for all components of $\boldsymbol{\theta}$, guaranteeing that the sole stationary point is a global minimum.\\
+			\\
+			Taking the derivative w.r.t $\theta_i$ gives
+			\[\sum_{n=1}^N(\textbf{x}_n)_i\left(\left(\sum_{j=1}^{N}2(\textbf{x}_n)_j\theta_j\right)-2y_n\right)\]
+			For the value $\boldsymbol{\hat\theta}$ of $\boldsymbol{\theta}$ for which this is 0 for all $i$, we have
+			\[\sum_{n=1}^N\boldsymbol{\hat\theta}^T\textbf{x}_n(\textbf{x}_n)_i=\sum_{n=1}^Ny_n(\textbf{x}_n)_i\]
+			The right-hand side is the $i$th element of 
+			\[\sum_{n=1}^{N}y_n\textbf{x}_n\]
+			while the left-hand side is the $i$th element of 
+			\[\left(\sum_{n=1}^{N}\textbf{x}_n\textbf{x}_n^T\right)\boldsymbol{\hat\theta}\]
+			Therefore these two vectors are equal and we have our requried equality.
+			
+		\end{answered}
 		\item Let $\hat{\theta}_i,\ i=1,2,...,m$ be unbiased estimators of a parameter vector $\theta$, so that $\mathbb{E}[\hat{\theta}_i]=\theta,\ i=1,2,...,m$. Moreover, assume that the respective estimators are uncorrelated to each other and that all have the same variance $\sigma^2=\mathbb{E}[(\theta_i-\theta)^T(\theta_i-\theta)]$. Show that by averaging the estimates, e.g.
 		\[\hat{\theta}=\frac{1}{m}\sum_{i=1}^{m}\hat{\theta}_i\]
 		the new estimator has total variance $\sigma_c^2=\mathbb{E}[(\theta_i-\theta)^T(\theta_i-\theta)]=\frac{\sigma^2}{m}$.
@@ -97,27 +114,35 @@
 	
 		\item Derive the Cramer-Rao bound for the LS estimator, when the training data result from the linear model
 		\[y_n=\theta x_n+\eta_n,\quad n=1,2,...,\]
-		where $x_n$ and $\eta_n$ are i.i.d. samples of a zero mean random variable with variance $\sigma_x^2$, and a Gaussian random variable with zero mean and variance $\sigma_\eta^2$ respectively. Assume also that $x$ and $\eta$ are independent. Then show that the LS simulator achieves the CR bound only asymptotically.
+		where $x_n$ and $\eta_n$ are i.i.d. samples of a zero mean random variable with variance $\sigma_x^2$, and a Gaussian random variable with zero mean and variance $\sigma_\eta^2$ respectively. Assume also that $x$ and $\eta$ are independent[sic]. Then show that the LS simulator achieves the CR bound only asymptotically.
 		
 		\begin{answered}
-			We here make the sensible assumption that both $x$ and $y$ are observable, and that $\eta$ is unobserved and the only source of uncertainty in our system. This gives us our likelihood function as
-			\[f(\textbf{a},\textbf{b};\theta)=p(\textbf{x}=\textbf{a},\boldsymbol{\eta}=\textbf{b}-\theta\textbf{a})\]
-			where $p$ is our joint likelihood function.
-			By assumption of mutual independence of the all elements of $\textbf{x}$ and $\boldsymbol{\eta}$, this is just equal to
-			\[\prod_{n=1}^{N}p(x_n=a_n)\cdot p(\eta_n=b_n-\theta a_n)\]
-			(via an abuse of notation, the $p$ here correspond to the individual likelihood functions to the relevant quantities inside the brackets)
-			In order to obtain the Fisher information, we take the log, differentiate twice w.r.t $\theta$, multiply by -1, and take the expectation. This yields
-			\[\frac{1}{\sigma_\eta^2}\sum_{n=1}^{N}E(x_0^2)\]
-			which is just equal to 
+			Assume that the input variable $X$ and output $Y$ are observable and that the elements of $\textbf{x}$ and $\boldsymbol{\eta}$ are all mutually independent. Therefore our pdf is separable as
+			\[f(\textbf{a},\textbf{b},\theta)=\prod_{n=1}^{N}p_x^n(a_n)p_\eta^n(b_n-\theta a_n)\]
+			where $p_x^n$ is the marginal pdf of $x_n$ and $p_\eta^n$ is the marginal pdf of $\eta_n$.
+			Taking the log gives
+			\[-\sum_{n=1}^{N} \frac{(b_n-\theta a_n)^2}{2\sigma_\eta^2} + \text{ terms independent of }\theta\]
+			Differentiating this twice w.r.t $\theta$ and multiplying through by -1 yields
+			\[\sum_{n=1}^{N}\frac{a_n^2}{\sigma_\eta^2}\]
+			The expectation of this quantity (as a multiple integral over all the $a_n$ and $b_n$) is the Fisher information. We can make our lives easier by making the change of variables $c_n = b_n-\theta a_n$ and reframing our intgeral as being over the $a_n$ and $c_n$ instead. This separates the base pdf completely into $a_n$ and $c_n$ terms. Since the quantity we are taking the expectation of only contains $a_n$ terms, the Fisher information immediately simplifies to 
+			\[\sum_{n=1}^{N}\int_{-\infty}^{\infty}p_x^n(a_n)\frac{a_n^2}{\sigma_\eta^2}da_n\]
+			Since the $x_n$ are i.i.d with zero mean and variance $\sigma_x^2$
+			this is just equal to 
 			\[N\cdot\frac{\sigma_x^2}{\sigma_\eta^2}\]
 			Therefore the Cramer-Rao lower bound is 
 			\[\frac{\sigma_\eta^2}{N\cdot\sigma_x^2}\]
 			Given a set of observations $\textbf{x},\textbf{y}$, the value of $\hat\theta$ that minimises least squares is
 			\[\hat\theta = \frac{\textbf{x}\cdot\textbf{y}}{\textbf{x}\cdot\textbf{x}} = \frac{\textbf{x}\cdot(\theta \textbf{x} + \boldsymbol{\eta})}{\textbf{x}\cdot\textbf{x}} = \theta + \frac{\textbf{x}\cdot\boldsymbol{\eta}}{\textbf{x}\cdot\textbf{x}}\]
-			Some rearrangement reveals the variance of this variable to be
-			\[\sigma_\eta^2\cdot\mathbb{E}\left(\frac{1}{\textbf{x}\cdot \textbf{x}}\right)\]
-			We note that as $N\rightarrow\infty$, the variance of $\frac{\mathbf{x}\cdot\mathbf{x}}{N}$ decays to 0, and since this is a non-negative quantity, by Jensen's inequality we obtain
-			\[\mathbb{E}\left(\frac{N}{\mathbf{x}\cdot\mathbf{x}}\right)\rightarrow\frac{N}{\mathbb{E}(\mathbf{x}\cdot\mathbf{x})} = \frac{1}{\sigma_x^2}\] from above as $N\rightarrow\infty$. The desired result follows directly.
+			This quantity has expectation $\theta$ since we can separate out the zero-mean $\boldsymbol{\eta}$ from the second term. Therefore the variance is just
+			\[\mathbb{E}\left(\frac{(\textbf{x}\cdot\boldsymbol{\eta})^2}{(\textbf{x}\cdot\textbf{x})^2}\right)\]
+			Considering that the elements of $\eta$ are mutually independent and have expectation zero, we can ignore cross terms in the expansion of the numerator, which allows us to simplify the above expression to
+			\[\mathbb{E}\left(\frac{\sum_{n=1}^{N}(x_n\eta_n)^2}{(\textbf{x}\cdot\textbf{x})^2}\right)=\sigma_\eta^2\mathbb{E}\left(\frac{\textbf{x}\cdot\textbf{x}}{(\textbf{x}\cdot\textbf{x})^2}\right)=\mathbb{E}\left(\frac{\sigma_\eta^2}{\textbf{x}\cdot\textbf{x}}\right)\]
+			Note that $\textbf{x}\cdot\textbf{x}$ is the sum of $N$ independent copies of $\textbf{x}$, and thus by the strong law of large numbers
+			\[\frac{\textbf{x}\cdot\textbf{x}}{N}\xrightarrow{a.s.}\sigma_x^2\]
+			where the convergence is almost sure convergence.
+			By the continuous mapping theorem we immediately get \[\frac{N}{\textbf{x}\cdot\textbf{x}}\xrightarrow{a.s.}\frac{1}{\sigma_x^2}\]
+			Under the assumption that this family of random variables is uniformly integrable (which I think is true but showing it is effort) the expectations exist and converge to the expectation of the limit.
+			TODO - work out how to get from a.s. convergence to L1 comvergence
 		\end{answered}
 	
 		\item Let us consider the regression model
@@ -127,7 +152,7 @@
 		is a sufficient estimate.
 		
 		\begin{answered}
-			Note that the above expression may be written as 
+			Here we treat the $x_n$ as known quantities, and model the $\eta_n$ as our only source of uncertainty. Using the relation $\textbf{y}=\boldsymbol{\theta}^T\textbf{x}+\textbf{y}$ we can rewrite $\boldsymbol{\hat{\theta}}$ as
 			\[\theta+(X^T\Sigma_\eta^{-1}X)^{-1}X^T\Sigma_\eta^{-1} \eta\]
 			The covariance of this expression is just
 			\[(X^T\Sigma_\eta^{-1}X)^{-1}\]
@@ -141,7 +166,7 @@
 		\[S_\mu:=\frac{1}{N}\sum_{n=1}^{N}x_n\]
 		\[S_{\sigma^2}:=\frac{1}{N}\sum_{n=1}^{N}(x_n-S_\mu)^2\]
 		\[\bar{S}_{\sigma^2}:=\frac{1}{N}\sum_{n=1}^{N}(x_n-\mu)^2\]
-		Show that is $\mu$ is considered to be known, a sufficient statistic for $\sigma^2$ is $\bar S_{\sigma^2}$. Moreover in the case where both $(\mu,\sigma^2)$ are unknown, then a sufficient statistic is the pair $(S_\mu,S_{\sigma^2})$
+		Show that if $\mu$ is considered to be known, a sufficient statistic for $\sigma^2$ is $\bar S_{\sigma^2}$. Moreover in the case where both $(\mu,\sigma^2)$ are unknown, then a sufficient statistic is the pair $(S_\mu,S_{\sigma^2})$
 		
 		\begin{answered}
 			This is not well-posed in its current form. It does however make sense if we constrain the $x_i$ to be drawn from a Gaussian distribution. 
@@ -156,6 +181,20 @@
 			which is solely a function of $\mu$, $\sigma^2$, $S_\mu$, and $S_{\sigma^2}$. Therefore we have the second result by Fisher-Neyman. 
 		\end{answered}
 	
+		\item Show that solving the task 
+		\[\text{minimise}\ L(\theta,\lambda)=\sum_{n=1}^N\left(y_n-\theta_0-\sum_{i=1}^l\theta_i x_{ni}\right)^2+\lambda\sum_{i=1}^l|\theta_i|^2\]
+		is equivalent to solving the task
+		\[\text{minimise}\ L(\theta,\lambda)=\sum_{n=1}^N\left((y_n-\bar{y})-\sum_{i=1}^l\theta_i (x_{ni}-\bar{x}_i)\right)^2+\lambda\sum_{i=1}^l|\theta_i|^2\]
+		and the estimate of $\theta_0$ is given by
+		\[\hat{\theta}_0=\bar{y}-\sum_{i=1}^l\hat{\theta}_i\bar{x}_i\]
+		
+		\begin{answered}
+			The derivative of the first expression is necessarily 0 when evalutated at its unique minimiser ${\boldsymbol{\hat{\theta}}}$. By evaluating the derivative with respect to $\theta_0$ at the minimiser, we immediately get
+			\[\hat{\theta}_0=\bar{y}-\sum_{i=1}^l\hat{\theta}_i\bar{x}_i\]
+			Substituting this into the expression to be minimised reveals that minimising over the other $N$ components is exactly equivalent to solving the first constraint of the second optimisation problem. We already know that the minimiser to our first problem meets the second constraint of the second problem, and therefore will solve the problem in its entirety.
+			
+			Each of these problems has a unique solution, so proving the implication one way (minimiser of first problem also solves second problem) is enough to show that the two problems are completely equivalent.
+		\end{answered}
 	\end{QandA}
 	
 \end{document}
