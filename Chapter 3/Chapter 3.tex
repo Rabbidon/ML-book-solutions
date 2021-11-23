@@ -196,7 +196,48 @@
 			The second optimisation problem has a unique solution (can be seen by explicitly expressing as a quadratic form), so the above implication shows that the first problem also has a unique solution. Thus the two problems are exactly equivalent.
 		\end{answered}
 	
-		\item
+		\item Consider the linear regression task 
+		\[y_n = \theta_o+\eta_n\]
+		where the $\eta_n$ are i.i.d. zero-mean Gaussian variables of variance $\sigma_\eta^2$. Show that the ridge regression estimator with parameter $\lambda$, $\hat{\theta}_b(\lambda)$, and the minimum variance unbiased estimator, $\hat{\theta}_\text{MVU}$ , of $\theta_o$ satisfy the following: 
+		
+		$\text{MSE}(\hat{\theta}_b(\lambda))<\text{MSE}(\hat{\theta}_\text{MVU})$ provided that
+		\[\begin{cases}
+			\lambda\in(0,\infty) & \theta_o^2\leq\frac{\sigma_\eta^2}{N}\\
+			\lambda\in\left(0,\frac{2\sigma_\eta^2}{\theta_o^2-\frac{\sigma_\eta^2}{N}}\right) & \theta_o^2>\frac{\sigma_\eta^2}{N}
+		\end{cases}\]
+	Moreover, show that the minimum MSE performance for the ridge regression estimate is attained at $\lambda_*=\frac{\sigma_\eta^2}{\theta_o^2}$.
+	
+	\begin{answered}
+		We know that in this case with i.i.d. Gaussian noise and constant input that the MVU estimator is just $\bar{y}$ the mean of the sample outputs. We thus calculate
+		\[\text{MSE}(\hat{\theta}_\text{MVU})=\mathbb{E}((\bar{y}-\theta_o)^2)=\mathbb{E}((\sum_{n=1}^{N}\frac{\eta_n}{N})^2)\]
+		Since the $\eta_n$ are independent and have zero mean, the cross terms disappear and we are left with
+		\[\text{MSE}(\hat{\theta}_\text{MVU})=\mathbb(\sum_{n=1}^{N}\mathbb{E}(\frac{\eta_n^2}{N^2}))=N\cdot\frac{\sigma_\eta^2}{N^2}=\frac{\sigma_\eta^2}{N}\]
+		Similarly, we know from studying the ridge regression problem that $\hat{\theta}_b(\lambda)$ satisfies
+		\[(\lambda+N)\hat{\theta}_b(\lambda)= \sum_{n=1}^{N}y_n=N\theta_o+\sum_{n=1}^{N}\eta_n\] 
+		and therefore
+		\[\hat{\theta}_b(\lambda)=\frac{N}{N+\lambda}\theta_o+\sum_{n=1}^{N}\frac{\eta_n}{N+\lambda}\]
+		We now have
+		\[\text{MSE}(\hat{\theta}_b(\lambda))=\mathbb{E}\left(\left(\frac{N}{N+\lambda}\theta_o+\sum_{n=1}^{N}\frac{\eta_n}{N+\lambda}-\theta_o\right)^2\right)=\mathbb{E}\left(\left(\sum_{n=1}^{N}\frac{\eta_n}{N+\lambda}-\frac{\lambda\theta_o}{N+\lambda}\right)^2\right)\]
+		We again use the fact that the $\eta_n$ are independent and have zero mean to obtain
+		\[\text{MSE}(\hat{\theta}_b(\lambda))=\frac{\lambda^2\theta_o^2+N\sigma_\eta^2}{(N+\lambda)^2}\]
+		Therefore the statement $\text{MSE}(\hat{\theta}_b(\lambda))<\text{MSE}(\hat{\theta}_\text{MVU})$ is equivalent to
+		\[\frac{\lambda^2\theta_o^2+N\sigma_\eta^2}{(N+\lambda)^2}<\frac{\sigma_\eta^2}{N}\]
+		Multiplying through by each denominator reveals this to be equivalent to stating
+		\[N\lambda^2\theta_o^2+N^2\sigma_\eta^2<(N+\lambda)^2\sigma_\eta^2\]
+		or rather
+		\[(\sigma_\eta^2-N\theta_o^2)\lambda^2+2\sigma_\eta^2N\lambda>0\]
+		Our outline of ridge regression already assumes that $\lambda$ is positive. We can see by considering the sign of the quadratic term that if $\theta_o^2\leq\frac{\sigma_\eta^2}{N}$ this expression is positive for all $\lambda\in(0,\infty)$. Similarly, if $\theta_o^2>\frac{\sigma_\eta^2}{N}$, the expression is positive exactly for \[\lambda\in\left(0,\frac{2\sigma_\eta^2}{\theta_o^2-\frac{\sigma_\eta^2}{N}}\right)\]
+		as required.
+		To calculate where the ridge regression estimate achieves minimum MSE, we take the derivative (with the help of the quotient rule) w.r.t. $\lambda$:
+		\[\frac{d(\text{MSE}(\hat{\theta}_b(\lambda)))}{d\theta}=\frac{2\lambda\theta_o^2(N+\lambda)^2-2(\lambda^2\theta_o^2+N\sigma_\eta^2)(N+\lambda)}{(N+\lambda)^4}\]
+		This becomes 0 in the case where
+		\[\lambda\theta_o^2(N+\lambda)=(\lambda^2\theta_o^2+N\sigma_\eta^2)\]
+		which directly gives the optimal value of $\lambda$ as
+		\[\lambda_*=\frac{\sigma_\eta^2}{\theta_o^2}\]
+		
+	\end{answered}
+	
+	\item Consider
 		
 		
 	\end{QandA}
