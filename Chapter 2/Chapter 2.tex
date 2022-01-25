@@ -149,7 +149,7 @@
 		\[\int_0^{\infty} \frac{b^a}{\Gamma(a)}x^{a+1}e^{-bx}dx-\frac{a^2}{b^2}\]
 		We rewrite this expression as 
 		\[\frac{a(a+1)}{b^2}\int_0^{\infty}\frac{b^{a+2}}{a(a+1)\Gamma(a)}e^{-bx}dx-\frac{a^2}{b^2}\] Using the fact that $\Gamma(a+2)=a(a+1)\Gamma(a)$, we see that the integrand is just the pdf of a gamma distribution with parameters $a+2,b$. Therefore we calculate the original variance as 
-		\[\frac{a(a+1)-a}{b^2}=\frac{a}{b^2}\]
+		\[\frac{a(a+1)-a^2}{b^2}=\frac{a}{b^2}\]
 	\end{answered}
 
 	\item Show that the mean and covariance of a Dirichlet pdf with parameters $a_k$, $k=1,2,...,K$ are given by
@@ -301,7 +301,7 @@
 		\[-\int_a^bp(x)\log(p(x))dx\]
 		We can make a change of variables $y=\frac{x-a}{b-a}$ to rewrite this as
 		\[-\int_0^1(b-a)\cdot p((b-a)y+a)\log(p((b-a)y+a))dy\]
-		We note that is an integral the probability space $[0,1]$ (equipped with the uniform measure). We also note that $g(y)$ = $p((b-a)y+a)$ is integrable with respect to this measure (integrates to $\frac{1}{b-a}$) and that $\phi(x)=x\log(x)$ is convex on the real line (we will only be applying it to positive $x$ so this is valid). Thus the integral is exactly of the form required to use Jensen's inequality, and we find that
+		We note that is an integral over the probability space $[0,1]$ (equipped with the uniform measure). We also note that $g(y)$ = $p((b-a)y+a)$ is integrable with respect to this measure (integrates to $\frac{1}{b-a}$) and that $\phi(x)=x\log(x)$ is convex on the real line (we will only be applying it to positive $x$ so this is valid). Thus the integral is exactly of the form required to use Jensen's inequality, and we find that
 		\[entropy(X)\leq-(b-a)I\log(I)\]
 		where
 		\[I=\int_0^1p((b-a)y+a)dy\]

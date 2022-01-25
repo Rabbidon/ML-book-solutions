@@ -237,8 +237,13 @@
 		
 	\end{answered}
 	
-	\item Consider
-		
+	\item Consider the regression model given in problem 3.9, but with $\Sigma=I_N$. Compute the MSE of the predictions $\mathbb{E}[(y-\hat{y})^2]$, where $y$ is the true response and $\hat{y}$ is the predicted value, given a test point $x$ and using the LS estimator
+	\[\hat{\theta}=\left(X^TX\right)^{-1}X^Ty\]
+	The LS estimator has been obtained via a set of N measurements, collected in the input matrix X and y. The expectation $\mathbb{E}[\cdot]$ is taken with respect to y, the training data $\mathcal{D}$, and the test points x.
+	
+	\begin{answered}
+		There are multiple sources of uncertainty here, so we should lay out the problem carefully. In our test set, we have $N$ $(x,y)$-pairs. We use these to calculate 
+	\end{answered}
 		
 	\end{QandA}
 	
